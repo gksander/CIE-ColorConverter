@@ -1,12 +1,11 @@
 {
   "name": "cie-colorconverter",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Convert between CIE color spaces",
-  "main": "dist/CIEColorConverter.js",
-  "types": "types/main.d.ts",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
-    "dev": "parcel ./src/CIEColorConverter.ts --out-dir ./build",
-    "build": "parcel build ./src/CIEColorConverter.ts --out-dir ./dist"
+    "build": "tsc && parcel build src/browser.ts --out-dir ./dist.browser"
   },
   "keywords": [
     "CIE",
@@ -16,10 +15,10 @@
   ],
   "author": "Grant Sander",
   "license": "ISC",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/gksander/CIE-ColorConverter.git"
-    },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gksander/CIE-ColorConverter.git"
+  },
   "dependencies": {
     "mathjs": "^5.9.0"
   },

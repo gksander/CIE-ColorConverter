@@ -3,72 +3,79 @@
 import { inv, multiply, transpose } from 'mathjs'
 
 // RefWhite Type
-// export type RefWhiteType = 
-//   "A" |
-//   "B" |
-//   "C" |
-//   "D50" |
-//   "D55" |
-//   "D65" |
-//   "D75" |
-//   "E" |
-//   "F2" |
-//   "F7" |
-//   "F11";
+type RefWhiteType = 
+  "A" |
+  "B" |
+  "C" |
+  "D50" |
+  "D55" |
+  "D65" |
+  "D75" |
+  "E" |
+  "F2" |
+  "F7" |
+  "F11";
 
-// // RGB Model
-// type RGBModelType = 
-//   "Adobe RGB (1998)" |
-//   "AppleRGB" |
-//   "Best RGB" |
-//   "Beta RGB" |
-//   "Bruce RGB" |
-//   "CIE RGB" |
-//   "ColorMatch RGB" |
-//   "Don RGB 4" |
-//   "ECI RGB v2" |
-//   "Ekta Space PS5" |
-//   "NTSC RGB" |
-//   "PAL/SECAM RGB" |
-//   "ProPhoto RGB" |
-//   "SMPTE-C RGB" |
-//   "sRGB" |
-//   "Wide Gamut RGB";
+// RGB Model
+type RGBModelType = 
+  "Adobe RGB (1998)" |
+  "AppleRGB" |
+  "Best RGB" |
+  "Beta RGB" |
+  "Bruce RGB" |
+  "CIE RGB" |
+  "ColorMatch RGB" |
+  "Don RGB 4" |
+  "ECI RGB v2" |
+  "Ekta Space PS5" |
+  "NTSC RGB" |
+  "PAL/SECAM RGB" |
+  "ProPhoto RGB" |
+  "SMPTE-C RGB" |
+  "sRGB" |
+  "Wide Gamut RGB";
 
-// // Gamma Type
-// type GammaModelType = 
-//   "1.0" |
-//   "1.8" |
-//   "2.2" |
-//   "sRGB" |
-//   "L*";
+// Gamma Type
+type GammaModelType = 
+  "1.0" |
+  "1.8" |
+  "2.2" |
+  "sRGB" |
+  "L*";
 
-// // Adaptation type
-// type AdaptationType = 
-//   "Bradford" |
-//   "von Kries" |
-//   "XYZ Scaling" |
-//   "None";
+// Adaptation type
+type AdaptationType = 
+  "Bradford" |
+  "von Kries" |
+  "XYZ Scaling" |
+  "None";
+
+type NumericTriple = [number, number, number];
+
+type Matrix_3x3 = [
+  [number, number, number],
+  [number, number, number],
+  [number, number, number]
+] 
 
 
-
-export default class ColorConverter implements CIEColorConverter.ColorConverter {
+export default class ColorConverter {
 
   // Properties to be set on instantiation
-  RefWhite: CIEColorConverter.RefWhiteType = "D50";
-  RgbModel: CIEColorConverter.RGBModelType = "sRGB";
-  GammaModel: CIEColorConverter.GammaModelType = "sRGB";
-  Adaptation: CIEColorConverter.AdaptationType = "Bradford";
+  RefWhite: RefWhiteType = "D50";
+  RgbModel: RGBModelType = "sRGB";
+  GammaModel: GammaModelType = "sRGB";
+  Adaptation: AdaptationType = "Bradford";
   kE: number = 216/24389;
   kK = 24389/27;
 
 
   // Constructor
   constructor(
-    RefWhite: CIEColorConverter.RefWhiteType = "D50",
-    RgbModel: CIEColorConverter.RGBModelType = "sRGB",
-    GammaModel: CIEColorConverter.GammaModelType = "sRGB",
-    Adaptation: CIEColorConverter.AdaptationType = "Bradford"
+    RefWhite: RefWhiteType = "D50",
+    RgbModel: RGBModelType = "sRGB",
+    GammaModel: GammaModelType = "sRGB",
+    Adaptation: AdaptationType = "Bradford"
   ) {
     this.RefWhite = RefWhite;
     this.RgbModel = RgbModel;
@@ -78,7 +85,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
 
 
   // Computed: RefWhite Matrix
-  get Mtx_RefWhite(): CIEColorConverter.NumericTriple {
+  get Mtx_RefWhite(): NumericTriple {
     switch (this.RefWhite) {
       case "A": return [1.09850, 1, 0.35585];
       case "B": return [0.99072, 1, 0.85223];
@@ -96,7 +103,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
   }
 
   // Computed: RefWhite RGB Matrix
-  get Mtx_RefWhiteRGB(): CIEColorConverter.NumericTriple {
+  get Mtx_RefWhiteRGB(): NumericTriple {
     switch (this.RgbModel) {
       case "Adobe RGB (1998)": return [0.95047, 1, 1.08883];
       case "AppleRGB": return [0.95047, 1, 1.08883];
@@ -154,7 +161,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
 
   // Computed: RGB to XYZ matrix
   // Values come from table on http://www.brucelindbloom.com/
-  get Mtx_RGB2XYZ(): CIEColorConverter.Matrix_3x3 {
+  get Mtx_RGB2XYZ(): Matrix_3x3 {
     let xr, yr, xg, yg, xb, yb;
     switch (this.RgbModel) {
       case "Adobe RGB (1998)": {
@@ -261,7 +268,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
 
   
   // Computed: Matrix Adaptaion
-  get MtxAdp(): CIEColorConverter.Matrix_3x3 {
+  get MtxAdp(): Matrix_3x3 {
     switch (this.Adaptation) {
       case "Bradford": {
         return [
@@ -377,7 +384,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * @param {[number, number, number]} XYZ triple in range [0, 1]
    * Outputs RGB triple in range [0, 255]
    */
-  XYZ_to_RGB(XYZ: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  XYZ_to_RGB(XYZ: NumericTriple): NumericTriple {
     let XYZd = XYZ;
 
     if (this.Adaptation != "None") {
@@ -418,9 +425,9 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * @param {number[]} RGB RGB Triple
    * NOTE: This assumes RGB is scaled from [0, 255], XYZ in [0, 1]
    */
-  RGB_to_XYZ(RGB: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  RGB_to_XYZ(RGB: NumericTriple): NumericTriple {
     // Invers compound the values
-    RGB = RGB.map(v => this.inverse_compand(v/255)) as CIEColorConverter.NumericTriple;
+    RGB = RGB.map(v => this.inverse_compand(v/255)) as NumericTriple;
     // Linear RGB to XYZ
     let XYZ = multiply(RGB, this.Mtx_RGB2XYZ);
 
@@ -458,7 +465,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * @param Lab Lab triple
    * XYZ in range [0, 1]
    */
-  Lab_to_XYZ(Lab: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  Lab_to_XYZ(Lab: NumericTriple): NumericTriple {
     let L = Lab[0],
         a = Lab[1],
         b = Lab[2],
@@ -482,7 +489,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * Converts Lab triple to XYZ tripe in range [0, 1]
    * @param XYZ XYZ triple
    */
-  XYZ_to_Lab(XYZ: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  XYZ_to_Lab(XYZ: NumericTriple): NumericTriple {
     let X = XYZ[0],
         Y = XYZ[1],
         Z = XYZ[2],
@@ -527,7 +534,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * Convert xyY triple to XYZ triple
    * @param xyY xyY triple
    */
-  xyY_to_XYZ(xyY: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  xyY_to_XYZ(xyY: NumericTriple): NumericTriple {
     let [x, y, Y] = xyY;
     if (y < 0.000001) {
       return [0, 0, 0];
@@ -545,7 +552,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * Convert XYZ to xyY
    * @param XYZ XYZ triple in [0, 1]
    */
-  XYZ_to_xyY(XYZ: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  XYZ_to_xyY(XYZ: NumericTriple): NumericTriple {
     let [X, Y, Z] = XYZ,
         Den = X + Y + Z;
     // Non-zero Den:
@@ -568,7 +575,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * Lab triple to LCH triple
    * @param Lab Lab triple
    */
-  Lab_to_LCHab(Lab: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  Lab_to_LCHab(Lab: NumericTriple): NumericTriple {
     let [L, a, b] = Lab;
 
     let H = 180/Math.PI * Math.atan2(b, a);
@@ -583,7 +590,7 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
    * LCH triple to Lab triple
    * @param LCH LCH Triple
    */
-  LCHab_to_Lab(LCH: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  LCHab_to_Lab(LCH: NumericTriple): NumericTriple {
     let [L, C, H] = LCH;
     return [
       L,
@@ -595,14 +602,14 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
   /**
    * @param XYZ XYZ Triple
    */
-  XYZ_to_LCHab(XYZ: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  XYZ_to_LCHab(XYZ: NumericTriple): NumericTriple {
     return this.Lab_to_LCHab(this.XYZ_to_Lab(XYZ))
   }
 
   /**
    * @param XYZ XYZ Triple
    */
-  XYZ_to_Luv(XYZ: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  XYZ_to_Luv(XYZ: NumericTriple): NumericTriple {
     let [X, Y, Z] = XYZ,
         RefWhite = this.Mtx_RefWhite,
         X_r = RefWhite[0],
@@ -626,14 +633,14 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
   /**
    * @param XYZ XYZ triple
    */
-  XYZ_to_LCHuv(XYZ: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  XYZ_to_LCHuv(XYZ: NumericTriple): NumericTriple {
     return this.Luv_to_LCHuv(this.XYZ_to_Luv(XYZ))
   }
 
   /**
    * @param Luv Luv triple
    */
-  Luv_to_LCHuv(Luv: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  Luv_to_LCHuv(Luv: NumericTriple): NumericTriple {
     let [L, u, v] = Luv;
     let H = 180/Math.PI * Math.atan2(v, u);
 
@@ -647,42 +654,42 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
   /**
    * @param xyY xyY Triple
    */
-  xyY_to_Lab(xyY: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  xyY_to_Lab(xyY: NumericTriple): NumericTriple {
     return this.XYZ_to_Lab(this.xyY_to_XYZ(xyY))
   }
 
   /**
    * @param xyY xyY Triple
    */
-  xyY_to_LCHab(xyY: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  xyY_to_LCHab(xyY: NumericTriple): NumericTriple {
     return this.Lab_to_LCHab(this.XYZ_to_Lab(this.xyY_to_XYZ(xyY)))
   }
 
   /**
    * @param xyY xyY Triple
    */
-  xyY_to_Luv(xyY: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  xyY_to_Luv(xyY: NumericTriple): NumericTriple {
     return this.XYZ_to_Luv(this.xyY_to_XYZ(xyY))
   }
 
   /**
    * @param xyY xyY triple
    */
-  xyY_to_LCHuv(xyY: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  xyY_to_LCHuv(xyY: NumericTriple): NumericTriple {
     return this.Luv_to_LCHuv(this.XYZ_to_Luv(this.xyY_to_XYZ(xyY)))
   }
 
   /**
    * @param xyY xyY Triple
    */
-  xyY_to_RGB(xyY: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  xyY_to_RGB(xyY: NumericTriple): NumericTriple {
     return this.XYZ_to_RGB(this.xyY_to_XYZ(xyY))
   }
 
   /**
    * @param Lab Lab triple
    */
-  Lab_to_xyY(Lab: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  Lab_to_xyY(Lab: NumericTriple): NumericTriple {
     return this.XYZ_to_xyY(this.Lab_to_XYZ(Lab))
   }
 
@@ -690,47 +697,15 @@ export default class ColorConverter implements CIEColorConverter.ColorConverter 
   /**
    * @param Lab Lab triple
    */
-  Lab_to_Luv(Lab: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  Lab_to_Luv(Lab: NumericTriple): NumericTriple {
     return this.XYZ_to_Luv(this.Lab_to_XYZ(Lab))
   }
 
   /**
    * @param Lab Lab triple
    */
-  Lab_to_LCHuv(Lab: CIEColorConverter.NumericTriple): CIEColorConverter.NumericTriple {
+  Lab_to_LCHuv(Lab: NumericTriple): NumericTriple {
     return this.Luv_to_LCHuv(this.Lab_to_Luv(Lab));
   }
 
-
-
-
-
-
 } // Env class definition
-
-
-
-
-
-
-
-// Add the ColorConverter class to the window
-if (window) {
-  (<any>window).ColorConverter = ColorConverter;
-}
-
-// let cvtr = new ColorConverter();
-
-
-
-// Check to see if we have the values
-// console.log(cvtr.LCHab_to_XYZ || "Missing LCHab_to_XYZ");
-// console.log(cvtr.LCHab_to_xyY || "Missing LCHab_to_xyY");
-// console.log(cvtr.LCHab_to_LCHab || "Missing LCHab_to_LCHab");
-// console.log(cvtr.LCHab_to_Luv || "Missing LCHab_to_Luv");
-// console.log(cvtr.LCHab_to_LCHuv || "Missing LCHab_to_LCHuv");
-// console.log(cvtr.LCHab_to_RGB || "Missing xyY_to_RGB");
-
-
-
-

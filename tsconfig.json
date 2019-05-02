@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "allowJs": true,
-		"resolveJsonModule": true,
     "module": "commonjs",
     "declaration": true,
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "jsx": "preserve",
 		"lib": [
@@ -14,7 +10,7 @@
 		],
     "target": "es5",
     "noImplicitAny": false,
-    "types": ["./types/main.d.ts"],
-    "include": ["src"]
-  }
+    "outDir": "dist"
+  },
+  "include": ["src/index.ts"]
 }
