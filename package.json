@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "tsc && parcel build src/browser.ts --out-dir ./dist.browser"
+    "build": "tsc && parcel build src/browser.ts --out-dir ./dist.browser",
+    "test": "jest --verbose"
   },
   "keywords": [
     "CIE",
@@ -23,7 +24,10 @@
     "mathjs": "^5.9.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.12",
+    "jest": "^24.7.1",
     "parcel-bundler": "^1.12.3",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.4.5"
   }
 }

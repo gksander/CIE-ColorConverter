@@ -621,7 +621,7 @@ export default class ColorConverter {
         urp = (4*X_r) / (X_r + 15*Y_r + 3*Z_r),
         vrp = (9*Y_r) / (X_r + 15*Y_r + 3*Z_r),
         yr = Y/Y_r,
-        L = (yr > this.kE) ? (116 * Math.pow(yr, 1/3)) : (this.kK * yr);
+        L = (yr > this.kE) ? (116 * Math.pow(yr, 1/3) - 16) : (this.kK * yr);
 
     return [
       L,
