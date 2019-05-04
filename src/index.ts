@@ -638,6 +638,7 @@ export default class ColorConverter {
   }
 
   /**
+   * Luv to LCHuv
    * @param Luv Luv triple
    */
   Luv_to_LCHuv(Luv: NumericTriple): NumericTriple {
@@ -708,4 +709,53 @@ export default class ColorConverter {
     return this.Luv_to_LCHuv(this.Lab_to_Luv(Lab));
   }
 
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHab_to_XYZ(LCH: NumericTriple): NumericTriple {
+    return this.Lab_to_XYZ(this.LCHab_to_Lab(LCH));
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHab_to_xyY(LCH: NumericTriple): NumericTriple {
+    return this.XYZ_to_xyY(this.Lab_to_XYZ(this.LCHab_to_Lab(LCH)))
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHab_to_Luv(LCH: NumericTriple): NumericTriple {
+    return this.XYZ_to_Luv(this.Lab_to_XYZ(this.LCHab_to_Lab(LCH)))
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHab_to_LCHuv(LCH: NumericTriple): NumericTriple {
+    return this.Luv_to_LCHuv(this.LCHab_to_Luv(LCH));
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHab_to_RGB(LCH: NumericTriple): NumericTriple {
+    return this.XYZ_to_RGB(this.LCHab_to_XYZ(LCH));
+  }
+
+
+
 } // Env class definition
+
+
+
+// let cvtr = new ColorConverter();
+
+// cvtr.Luv_to_XYZ;
+// cvtr.Luv_to_xyY;
+// cvtr.Luv_to_Lab;
+// cvtr.Luv_to_LCHab;
+// cvtr.Luv_to_Luv;
+// cvtr.Luv_to_LCHuv;
+// cvtr.Luv_to_RGB;
