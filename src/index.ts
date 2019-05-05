@@ -847,6 +847,32 @@ export default class ColorConverter {
     return this.XYZ_to_RGB(this.LCHuv_to_XYZ(LCH));
   }
 
+  /**
+   * @param RGB NumericTriple
+   */
+  RGB_to_xyY(RGB: NumericTriple): NumericTriple {
+    return this.XYZ_to_xyY(this.RGB_to_XYZ(RGB));
+  }
 
+  /**
+   * @param RGB NumericTriple
+   */
+  RGB_to_LCHab(RGB: NumericTriple): NumericTriple {
+    return this.Lab_to_LCHab(this.RGB_to_Lab(RGB));
+  }
+
+  /**
+   * @param RGB NumericTriple
+   */
+  RGB_to_Luv(RGB: NumericTriple): NumericTriple {
+    return this.XYZ_to_Luv(this.RGB_to_XYZ(RGB));
+  }
+
+  /**
+   * @param RGB NumericTriple
+   */
+  RGB_to_LCHuv(RGB: NumericTriple): NumericTriple {
+    return this.Luv_to_LCHuv(this.RGB_to_Luv(RGB));
+  }
 
 } // Env class definition
