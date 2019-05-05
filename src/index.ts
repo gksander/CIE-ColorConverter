@@ -744,18 +744,62 @@ export default class ColorConverter {
     return this.XYZ_to_RGB(this.LCHab_to_XYZ(LCH));
   }
 
+  /**
+   * @param Luv NumericTriple
+   */
+  Luv_to_XYZ(Luv: NumericTriple): NumericTriple {
+    let [L, u, v] = Luv;
+
+    let Y = (L > this.kK * this.kE) ?
+      Math.pow((L + 16)/116, 3) :
+      L/this.kK;
+
+    let RefWhite = this.Mtx_RefWhite,
+        X_r = RefWhite[0],
+        Y_r = RefWhite[1],
+        Z_r = RefWhite[2],
+        Den = X_r + 15*Y_r + 3*Z_r,
+        v_0 = (9 * Y_r)/Den,
+        u_0 = (4 * X_r)/Den,
+        d = Y * ((39 * L)/(v + 13 * L * v_0) - 5),
+        c = -1 / 3,
+        b = -5 * Y,
+        a = (1/3) * ((52 * L)/(u + 13 * L * u_0) - 1),
+        X = (d - b) / (a - c),
+        Z = X * a + b;
+
+    return [X, Y, Z];
+  }
+
+  /**
+   * @param Luv NumericTriple
+   */
+  Luv_to_xyY(Luv: NumericTriple): NumericTriple {
+    return this.XYZ_to_xyY(this.Luv_to_XYZ(Luv))
+  }
+
+  /**
+   * @param Luv NumericTriple
+   */
+  Luv_to_Lab(Luv: NumericTriple): NumericTriple {
+    return this.XYZ_to_Lab(this.Luv_to_XYZ(Luv))
+  }
+
+  /**
+   * @param Luv NumericTriple
+   */
+  Luv_to_LCHab(Luv: NumericTriple): NumericTriple {
+    return this.Lab_to_LCHab(this.Luv_to_Lab(Luv))
+  }
+
+
+  /**
+   * @param Luv NumericTriple
+   */
+  Luv_to_RGB(Luv: NumericTriple): NumericTriple {
+    return this.XYZ_to_RGB(this.Luv_to_XYZ(Luv))
+  }
+
 
 
 } // Env class definition
-
-
-
-// let cvtr = new ColorConverter();
-
-// cvtr.Luv_to_XYZ;
-// cvtr.Luv_to_xyY;
-// cvtr.Luv_to_Lab;
-// cvtr.Luv_to_LCHab;
-// cvtr.Luv_to_Luv;
-// cvtr.Luv_to_LCHuv;
-// cvtr.Luv_to_RGB;
