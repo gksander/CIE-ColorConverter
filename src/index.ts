@@ -792,12 +792,59 @@ export default class ColorConverter {
     return this.Lab_to_LCHab(this.Luv_to_Lab(Luv))
   }
 
-
   /**
    * @param Luv NumericTriple
    */
   Luv_to_RGB(Luv: NumericTriple): NumericTriple {
     return this.XYZ_to_RGB(this.Luv_to_XYZ(Luv))
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHuv_to_Luv(LCH: NumericTriple): NumericTriple {
+    let [L, C, H] = LCH;
+
+    return [
+      L,
+      C * Math.cos(H * Math.PI/180),
+      C * Math.sin(H * Math.PI/180)
+    ];
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHuv_to_XYZ(LCH: NumericTriple): NumericTriple {
+    return this.Luv_to_XYZ(this.LCHuv_to_Luv(LCH));
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHuv_to_xyY(LCH: NumericTriple): NumericTriple {
+    return this.XYZ_to_xyY(this.LCHuv_to_XYZ(LCH));
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHuv_to_Lab(LCH: NumericTriple): NumericTriple {
+    return this.XYZ_to_Lab(this.LCHuv_to_XYZ(LCH));
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHuv_to_LCHab(LCH: NumericTriple): NumericTriple {
+    return this.Lab_to_LCHab(this.LCHuv_to_Lab(LCH));
+  }
+
+  /**
+   * @param LCH NumericTriple
+   */
+  LCHuv_to_RGB(LCH: NumericTriple): NumericTriple {
+    return this.XYZ_to_RGB(this.LCHuv_to_XYZ(LCH));
   }
 
 
