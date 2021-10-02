@@ -1,4 +1,4 @@
-# CIE Color Convertor
+# CIE Color Converter
 
 This project is motivated by [Bruce Lindbloom](http://www.brucelindbloom.com/), and consists of a CIE color model converter. E.g., it will allow you to convert between XYZ, xyY, RGB, Luv, etc. color models.
 
@@ -7,31 +7,31 @@ This project is motivated by [Bruce Lindbloom](http://www.brucelindbloom.com/), 
 Install the package via
 
 ```sh
-npm i cie-colorconvertor
+npm i cie-colorconverter
 ```
 
-If you're using ES6 modules, you can import the convertor class via
+If you're using ES6 modules, you can import the converter class via
 
 ```js
-import CIECC from 'cie-colorconvertor'
+import CIECC from 'cie-colorconverter'
 ```
 
-To use the color convertor, you'll need to instantiate an instance of the CIECC class:
+To use the color converter, you'll need to instantiate an instance of the CIECC class:
 
 ```js
-import CIECC from 'cie-colorconvertor'
+import CIECC from 'cie-colorconverter'
 
-let convertor = new CIECC();
+let converter = new CIECC();
 ```
 
-Then, you can use the `convertor` instance to convert between profiles. Here's an example:
+Then, you can use the `converter` instance to convert between profiles. Here's an example:
 
 ```js
-import CIECC from 'cie-colorconvertor'
+import CIECC from 'cie-colorconverter'
 
-let convertor = new CIECC();
+let converter = new CIECC();
 
-let XYZ = convertor.RGB_to_XYZ([150, 100, 232]);
+let XYZ = converter.RGB_to_XYZ([150, 100, 232]);
 ```
 
 This will convert the RGB triple `[150, 100, 232]` to an XYZ triple.
@@ -44,9 +44,9 @@ import ColorConverter from 'cie-colorconverter'
 
 ## Browser Usage
 
-The npm packages ships with a browser-ready version at `node_modules/cie-colorconvertor/dist.browser/browser.js`. This will expose a global variable at `window.CIEColorConvertor` and is used the same as the ES6 version.
+The npm packages ships with a browser-ready version at `node_modules/cie-colorconverter/dist.browser/browser.js`. This will expose a global variable at `window.CIEColorConvertor` and is used the same as the ES6 version.
 
-## Convertor Options
+## Converter Options
 
 There are a few independent variables/parameters when it comes to color model conversions, including:
 
