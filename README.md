@@ -44,7 +44,7 @@ import ColorConverter from 'cie-colorconverter'
 
 ## Browser Usage
 
-The npm packages ships with a browser-ready version at `node_modules/cie-colorconvertor/dist.browser/browser.js`. This will expose a global variable at `window.CIEColorConvertor` and is used the same as the ES6 version.
+The npm packages ships with a browser-ready version at `node_modules/cie-colorconvertor/dist.browser/browser.js`. This will expose a global variable at `window.CIEColorConverter` and is used the same as the ES6 version.
 
 ## Convertor Options
 
