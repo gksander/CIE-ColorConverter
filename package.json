@@ -21,7 +21,7 @@
     "url": "git+https://github.com/gksander/CIE-ColorConverter.git"
   },
   "dependencies": {
-    "mathjs": "^5.10.3"
+    "mathjs": "^9.5.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
