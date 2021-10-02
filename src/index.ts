@@ -162,7 +162,7 @@ export default class ColorConverter {
   // Computed: RGB to XYZ matrix
   // Values come from table on http://www.brucelindbloom.com/
   get Mtx_RGB2XYZ(): Matrix_3x3 {
-    let xr, yr, xg, yg, xb, yb;
+    let xr: number, yr: number, xg: number, yg: number, xb: number, yb: number;
     switch (this.RgbModel) {
       case "Adobe RGB (1998)": {
         [xr, yr, xg, yg, xb, yb] = [0.64, 0.33, 0.21, 0.71, 0.15, 0.06];
@@ -255,7 +255,7 @@ export default class ColorConverter {
         Y_W,
         Z_W
       ]
-    );
+      ) as unknown as NumericTriple;
 
     return transpose(
       [
@@ -401,13 +401,17 @@ export default class ColorConverter {
       // Not sure why, but first input to multiply is right-most matrix
       XYZd = multiply(
         XYZ,
-        this.MtxAdp,
-        [
-          [Ad/As, 0, 0],
-          [0, Bd/Bs, 0],
-          [0, 0, Cd/Cs]
-        ],
-        inv(this.MtxAdp)
+        multiply(
+          this.MtxAdp,
+          multiply(
+            [
+              [Ad/As, 0, 0],
+              [0, Bd/Bs, 0],
+              [0, 0, Cd/Cs]
+            ],
+            inv(this.MtxAdp)
+          )
+        )
       )
     }
 
@@ -416,7 +420,12 @@ export default class ColorConverter {
       inv(this.Mtx_RGB2XYZ),
     )
     
-    return RGB.map(v => 255 * this.compand(v));
+    for (let i=0; i<3; i++)
+    {
+      RGB[i]= 255 * this.compand(RGB[i]);
+    }
+
+    return RGB;
   } // End XYZ_to_RGB
 
 
@@ -445,13 +454,17 @@ export default class ColorConverter {
 
       return multiply(
         XYZ,
-        this.MtxAdp,
-        [
-          [Ad/As, 0, 0],
-          [0, Bd/Bs, 0],
-          [0, 0, Cd/Cs]
-        ],
-        inv(this.MtxAdp)
+        multiply(
+          this.MtxAdp,
+          multiply(
+            [
+              [Ad/As, 0, 0],
+              [0, Bd/Bs, 0],
+              [0, 0, Cd/Cs]
+            ],
+            inv(this.MtxAdp)
+          )
+        )
       );
     } else {
       return XYZ;
