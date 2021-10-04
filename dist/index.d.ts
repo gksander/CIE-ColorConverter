@@ -12,15 +12,15 @@ export default class ColorConverter {
     kE: number;
     kK: number;
     constructor(RefWhite?: RefWhiteType, RgbModel?: RGBModelType, GammaModel?: GammaModelType, Adaptation?: AdaptationType);
-    readonly Mtx_RefWhite: NumericTriple;
-    readonly Mtx_RefWhiteRGB: NumericTriple;
-    readonly GammaRGB: {
+    get Mtx_RefWhite(): NumericTriple;
+    get Mtx_RefWhiteRGB(): NumericTriple;
+    get GammaRGB(): {
         value: number;
         index: number;
     };
-    readonly Gamma: number;
-    readonly Mtx_RGB2XYZ: Matrix_3x3;
-    readonly MtxAdp: Matrix_3x3;
+    get Gamma(): number;
+    get Mtx_RGB2XYZ(): Matrix_3x3;
+    get MtxAdp(): Matrix_3x3;
     /**
      *
      * @param {number} linear Linear value
@@ -60,12 +60,12 @@ export default class ColorConverter {
      * @param Lab Lab triple
      * Note: RGB in [0, 255]
      */
-    Lab_to_RGB(Lab: any): [number, number, number];
+    Lab_to_RGB(Lab: any): NumericTriple;
     /**
      * Convert RGB to Lab
      * @param RGB RGB triple in range [0, 255]
      */
-    RGB_to_Lab(RGB: any): [number, number, number];
+    RGB_to_Lab(RGB: any): NumericTriple;
     /**
      * Convert xyY triple to XYZ triple
      * @param xyY xyY triple
@@ -99,6 +99,7 @@ export default class ColorConverter {
      */
     XYZ_to_LCHuv(XYZ: NumericTriple): NumericTriple;
     /**
+     * Luv to LCHuv
      * @param Luv Luv triple
      */
     Luv_to_LCHuv(Luv: NumericTriple): NumericTriple;
@@ -134,5 +135,85 @@ export default class ColorConverter {
      * @param Lab Lab triple
      */
     Lab_to_LCHuv(Lab: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHab_to_XYZ(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHab_to_xyY(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHab_to_Luv(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHab_to_LCHuv(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHab_to_RGB(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param Luv NumericTriple
+     */
+    Luv_to_XYZ(Luv: NumericTriple): NumericTriple;
+    /**
+     * @param Luv NumericTriple
+     */
+    Luv_to_xyY(Luv: NumericTriple): NumericTriple;
+    /**
+     * @param Luv NumericTriple
+     */
+    Luv_to_Lab(Luv: NumericTriple): NumericTriple;
+    /**
+     * @param Luv NumericTriple
+     */
+    Luv_to_LCHab(Luv: NumericTriple): NumericTriple;
+    /**
+     * @param Luv NumericTriple
+     */
+    Luv_to_RGB(Luv: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHuv_to_Luv(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHuv_to_XYZ(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHuv_to_xyY(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHuv_to_Lab(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHuv_to_LCHab(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param LCH NumericTriple
+     */
+    LCHuv_to_RGB(LCH: NumericTriple): NumericTriple;
+    /**
+     * @param RGB NumericTriple
+     */
+    RGB_to_xyY(RGB: NumericTriple): NumericTriple;
+    /**
+     * @param RGB NumericTriple
+     */
+    RGB_to_LCHab(RGB: NumericTriple): NumericTriple;
+    /**
+     * @param RGB NumericTriple
+     */
+    RGB_to_Luv(RGB: NumericTriple): NumericTriple;
+    /**
+     * @param RGB NumericTriple
+     */
+    RGB_to_LCHuv(RGB: NumericTriple): NumericTriple;
 }
 export {};

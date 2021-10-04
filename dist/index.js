@@ -39,7 +39,7 @@ var ColorConverter = /** @class */ (function () {
                 default: return [1, 1, 1];
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ColorConverter.prototype, "Mtx_RefWhiteRGB", {
@@ -64,7 +64,7 @@ var ColorConverter = /** @class */ (function () {
                 case "Wide Gamut RGB": return [0.96422, 1, 0.82521];
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ColorConverter.prototype, "GammaRGB", {
@@ -89,7 +89,7 @@ var ColorConverter = /** @class */ (function () {
                 case "Wide Gamut RGB": return { value: 2.2, index: 2 };
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ColorConverter.prototype, "Gamma", {
@@ -104,7 +104,7 @@ var ColorConverter = /** @class */ (function () {
                 default: return 1;
             }
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ColorConverter.prototype, "Mtx_RGB2XYZ", {
@@ -196,7 +196,7 @@ var ColorConverter = /** @class */ (function () {
             ]);
         } // End Mtx_RGB2XYZ
         ,
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(ColorConverter.prototype, "MtxAdp", {
@@ -228,7 +228,7 @@ var ColorConverter = /** @class */ (function () {
             }
         } // End matrix Adaptation
         ,
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     /**
@@ -461,7 +461,7 @@ var ColorConverter = /** @class */ (function () {
      * @param XYZ XYZ Triple
      */
     ColorConverter.prototype.XYZ_to_Luv = function (XYZ) {
-        var X = XYZ[0], Y = XYZ[1], Z = XYZ[2], RefWhite = this.Mtx_RefWhite, X_r = RefWhite[0], Y_r = RefWhite[1], Z_r = RefWhite[2], Den = X + 15 * Y + 3 * Z, up = (Den > 0) ? ((4 * X) / Den) : 0, vp = (Den > 0) ? ((9 * Y) / Den) : 0, urp = (4 * X_r) / (X_r + 15 * Y_r + 3 * Z_r), vrp = (9 * Y_r) / (X_r + 15 * Y_r + 3 * Z_r), yr = Y / Y_r, L = (yr > this.kE) ? (116 * Math.pow(yr, 1 / 3)) : (this.kK * yr);
+        var X = XYZ[0], Y = XYZ[1], Z = XYZ[2], RefWhite = this.Mtx_RefWhite, X_r = RefWhite[0], Y_r = RefWhite[1], Z_r = RefWhite[2], Den = X + 15 * Y + 3 * Z, up = (Den > 0) ? ((4 * X) / Den) : 0, vp = (Den > 0) ? ((9 * Y) / Den) : 0, urp = (4 * X_r) / (X_r + 15 * Y_r + 3 * Z_r), vrp = (9 * Y_r) / (X_r + 15 * Y_r + 3 * Z_r), yr = Y / Y_r, L = (yr > this.kE) ? (116 * Math.pow(yr, 1 / 3) - 16) : (this.kK * yr);
         return [
             L,
             13 * L * (up - urp),
@@ -475,6 +475,7 @@ var ColorConverter = /** @class */ (function () {
         return this.Luv_to_LCHuv(this.XYZ_to_Luv(XYZ));
     };
     /**
+     * Luv to LCHuv
      * @param Luv Luv triple
      */
     ColorConverter.prototype.Luv_to_LCHuv = function (Luv) {
@@ -533,6 +534,136 @@ var ColorConverter = /** @class */ (function () {
      */
     ColorConverter.prototype.Lab_to_LCHuv = function (Lab) {
         return this.Luv_to_LCHuv(this.Lab_to_Luv(Lab));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHab_to_XYZ = function (LCH) {
+        return this.Lab_to_XYZ(this.LCHab_to_Lab(LCH));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHab_to_xyY = function (LCH) {
+        return this.XYZ_to_xyY(this.Lab_to_XYZ(this.LCHab_to_Lab(LCH)));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHab_to_Luv = function (LCH) {
+        return this.XYZ_to_Luv(this.Lab_to_XYZ(this.LCHab_to_Lab(LCH)));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHab_to_LCHuv = function (LCH) {
+        return this.Luv_to_LCHuv(this.LCHab_to_Luv(LCH));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHab_to_RGB = function (LCH) {
+        return this.XYZ_to_RGB(this.LCHab_to_XYZ(LCH));
+    };
+    /**
+     * @param Luv NumericTriple
+     */
+    ColorConverter.prototype.Luv_to_XYZ = function (Luv) {
+        var L = Luv[0], u = Luv[1], v = Luv[2];
+        var Y = (L > this.kK * this.kE) ?
+            Math.pow((L + 16) / 116, 3) :
+            L / this.kK;
+        var RefWhite = this.Mtx_RefWhite, X_r = RefWhite[0], Y_r = RefWhite[1], Z_r = RefWhite[2], Den = X_r + 15 * Y_r + 3 * Z_r, v_0 = (9 * Y_r) / Den, u_0 = (4 * X_r) / Den, d = Y * ((39 * L) / (v + 13 * L * v_0) - 5), c = -1 / 3, b = -5 * Y, a = (1 / 3) * ((52 * L) / (u + 13 * L * u_0) - 1), X = (d - b) / (a - c), Z = X * a + b;
+        return [X, Y, Z];
+    };
+    /**
+     * @param Luv NumericTriple
+     */
+    ColorConverter.prototype.Luv_to_xyY = function (Luv) {
+        return this.XYZ_to_xyY(this.Luv_to_XYZ(Luv));
+    };
+    /**
+     * @param Luv NumericTriple
+     */
+    ColorConverter.prototype.Luv_to_Lab = function (Luv) {
+        return this.XYZ_to_Lab(this.Luv_to_XYZ(Luv));
+    };
+    /**
+     * @param Luv NumericTriple
+     */
+    ColorConverter.prototype.Luv_to_LCHab = function (Luv) {
+        return this.Lab_to_LCHab(this.Luv_to_Lab(Luv));
+    };
+    /**
+     * @param Luv NumericTriple
+     */
+    ColorConverter.prototype.Luv_to_RGB = function (Luv) {
+        return this.XYZ_to_RGB(this.Luv_to_XYZ(Luv));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHuv_to_Luv = function (LCH) {
+        var L = LCH[0], C = LCH[1], H = LCH[2];
+        return [
+            L,
+            C * Math.cos(H * Math.PI / 180),
+            C * Math.sin(H * Math.PI / 180)
+        ];
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHuv_to_XYZ = function (LCH) {
+        return this.Luv_to_XYZ(this.LCHuv_to_Luv(LCH));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHuv_to_xyY = function (LCH) {
+        return this.XYZ_to_xyY(this.LCHuv_to_XYZ(LCH));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHuv_to_Lab = function (LCH) {
+        return this.XYZ_to_Lab(this.LCHuv_to_XYZ(LCH));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHuv_to_LCHab = function (LCH) {
+        return this.Lab_to_LCHab(this.LCHuv_to_Lab(LCH));
+    };
+    /**
+     * @param LCH NumericTriple
+     */
+    ColorConverter.prototype.LCHuv_to_RGB = function (LCH) {
+        return this.XYZ_to_RGB(this.LCHuv_to_XYZ(LCH));
+    };
+    /**
+     * @param RGB NumericTriple
+     */
+    ColorConverter.prototype.RGB_to_xyY = function (RGB) {
+        return this.XYZ_to_xyY(this.RGB_to_XYZ(RGB));
+    };
+    /**
+     * @param RGB NumericTriple
+     */
+    ColorConverter.prototype.RGB_to_LCHab = function (RGB) {
+        return this.Lab_to_LCHab(this.RGB_to_Lab(RGB));
+    };
+    /**
+     * @param RGB NumericTriple
+     */
+    ColorConverter.prototype.RGB_to_Luv = function (RGB) {
+        return this.XYZ_to_Luv(this.RGB_to_XYZ(RGB));
+    };
+    /**
+     * @param RGB NumericTriple
+     */
+    ColorConverter.prototype.RGB_to_LCHuv = function (RGB) {
+        return this.Luv_to_LCHuv(this.RGB_to_Luv(RGB));
     };
     return ColorConverter;
 }()); // Env class definition
