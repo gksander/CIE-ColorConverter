@@ -542,7 +542,7 @@ export class ColorConverter {
    * @param Lab Lab triple
    * Note: RGB in [0, 255]
    */
-  Lab_to_RGB(Lab) {
+  Lab_to_RGB(Lab: NumericTriple) {
     return this.XYZ_to_RGB(this.Lab_to_XYZ(Lab));
   }
 
@@ -550,7 +550,7 @@ export class ColorConverter {
    * Convert RGB to Lab
    * @param RGB RGB triple in range [0, 255]
    */
-  RGB_to_Lab(RGB) {
+  RGB_to_Lab(RGB: NumericTriple) {
     return this.XYZ_to_Lab(this.RGB_to_XYZ(RGB));
   }
 

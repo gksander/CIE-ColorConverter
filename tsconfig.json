@@ -10,8 +10,8 @@
       "esnext",
       "dom"
     ],
-    "target": "es5",
-    "noImplicitAny": false,
+    "target": "es6",
+    "noImplicitAny": true,
     "outDir": "dist"
   },
   "include": [
