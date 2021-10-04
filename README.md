@@ -1,46 +1,46 @@
 # CIE Color Convertor
 
-This project is motivated by [http://www.brucelindbloom.com](Bruce Lindbloom), and consists of a CIE color model converter. E.g., it will allow you to convert between XYZ, xyY, RGB, Luv, etc. color models.
+This project is motivated by [Bruce Lindbloom](http://www.brucelindbloom.com), and consists of a CIE color model converter. E.g., it will allow you to convert between XYZ, xyY, RGB, Luv, etc. color models.
 
 ## Usage
 
 Install the package via
 
 ```sh
-npm i cie-colorconvertor
+npm i cie-colorconverter
 ```
 
 Import the converter class via:
 
 ```js
-import { ColorConverter } from 'cie-colorconvertor'
+import { ColorConverter } from 'cie-colorconverter'
 ```
 
-To use the color convertor, you'll need to instantiate an instance of the `ColorConverter` class:
+To use the color converter, you'll need to instantiate an instance of the `ColorConverter` class:
 
 ```js
-import { ColorConverter } from 'cie-colorconvertor'
+import { ColorConverter } from 'cie-colorconverter'
 
-const convertor = new ColorConverter();
+const converter = new ColorConverter();
 ```
 
-Then, you can use the `convertor` instance to convert between profiles. Here's an example:
+Then, you can use the `converter` instance to convert between profiles. Here's an example:
 
 ```js
-import { ColorConverter } from 'cie-colorconvertor'
+import { ColorConverter } from 'cie-colorconverter'
 
-const convertor = new ColorConverter();
+const converter = new ColorConverter();
 
-const XYZ = convertor.RGB_to_XYZ([150, 100, 232]);
+const XYZ = converter.RGB_to_XYZ([150, 100, 232]);
 ```
 
 This will convert the RGB triple `[150, 100, 232]` to an XYZ triple.
 
 ## Browser Usage
 
-The npm packages ships with a browser-ready version at `node_modules/cie-colorconvertor/dist.browser/browser.js`. This will expose a global variable at `window.CIEColorConvertor` and is used the same as the ES6 version.
+The npm packages ships with a browser-ready version at `node_modules/cie-colorconverter/dist.browser/browser.js`. This will expose a global variable at `window.CIEColorConverter` and is used the same as the ES6 version.
 
-## Convertor Options
+## Converter Options
 
 There are a few independent variables/parameters when it comes to color model conversions, including:
 
