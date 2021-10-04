@@ -16,6 +16,10 @@ export class Matrix {
     return A_t;
   };
 
+  /**
+   * Return inverse of a matrix (if invertible)
+   * Throws if matrix not invertible.
+   */
   static inv = (A: Matrix_3x3): Matrix_3x3 => {
     const res = Identity_3x3();
     const [[a, b, c], [d, e, f], [h, i, j]] = A;
@@ -43,6 +47,48 @@ export class Matrix {
 
     return res;
   };
+
+  static multiply_3x3_times_triple = (
+    A: Matrix_3x3,
+    x: NumericTriple,
+  ): NumericTriple => {
+    const [[a, b, c], [d, e, f], [g, h, i]] = A;
+    const [t, u, v] = x;
+
+    return [
+      a * t + b * u + c * v,
+      d * t + e * u + f * v,
+      g * t + h * u + i * v,
+    ];
+  };
+
+  static multiply_triple_times_3x3 = (
+    x: NumericTriple,
+    A: Matrix_3x3,
+  ): NumericTriple => {
+    const [t, u, v] = x;
+    const [[a, b, c], [d, e, f], [g, h, i]] = A;
+
+    return [
+      a * t + d * u + g * v,
+      b * t + e * u + h * v,
+      c * t + f * u + i * v,
+    ];
+  };
+
+  static multiply_3x3_times_3x3 = (
+    A: Matrix_3x3,
+    B: Matrix_3x3,
+  ): Matrix_3x3 => {
+    const [[a, b, c], [d, e, f], [g, h, i]] = A;
+    const [[j, k, l], [m, n, o], [p, q, r]] = B;
+
+    return [
+      [a * j + b * m + c * p, a * k + b * n + c * q, a * l + b * o + c * r],
+      [d * j + e * m + f * p, d * k + e * n + f * q, d * l + e * o + f * r],
+      [g * j + h * m + i * p, g * k + h * n + i * q, g * l + h * o + i * r],
+    ];
+  };
 }
 
 const Identity_3x3 = (): Matrix_3x3 => [
@@ -56,3 +102,6 @@ export type Matrix_3x3 = [
   [number, number, number],
   [number, number, number],
 ];
+
+export type NumericTriple = [number, number, number];
+export type FatNumericTriple = [[number], [number], [number]];

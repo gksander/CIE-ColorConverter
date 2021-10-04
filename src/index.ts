@@ -1,7 +1,6 @@
 // See http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html for details on these computations.
 
-import { multiply } from "mathjs";
-import { Matrix, Matrix_3x3 } from "./Matrix";
+import { Matrix, Matrix_3x3, NumericTriple } from "./Matrix";
 
 // RefWhite Type
 type RefWhiteType =
@@ -41,8 +40,6 @@ type GammaModelType = "1.0" | "1.8" | "2.2" | "sRGB" | "L*";
 
 // Adaptation type
 type AdaptationType = "Bradford" | "von Kries" | "XYZ Scaling" | "None";
-
-type NumericTriple = [number, number, number];
 
 export default class ColorConverter {
   // Properties to be set on instantiation
@@ -279,7 +276,7 @@ export default class ColorConverter {
       Y_W = RW_RGB[1],
       Z_W = RW_RGB[2];
 
-    let [S_r, S_g, S_b] = multiply(
+    let [S_r, S_g, S_b] = Matrix.multiply_3x3_times_triple(
       Matrix.inv([
         [X_r, X_g, X_b],
         [Y_r, Y_g, Y_b],
@@ -412,25 +409,37 @@ export default class ColorConverter {
 
     if (this.Adaptation != "None") {
       // Get source/domain scale factors
-      let [As, Bs, Cs] = multiply(this.Mtx_RefWhite, this.MtxAdp);
-      let [Ad, Bd, Cd] = multiply(this.Mtx_RefWhiteRGB, this.MtxAdp);
-
-      // Not sure why, but first input to multiply is right-most matrix
-      XYZd = multiply(
-        XYZ,
+      let [As, Bs, Cs] = Matrix.multiply_triple_times_3x3(
+        this.Mtx_RefWhite,
         this.MtxAdp,
-        [
-          [Ad / As, 0, 0],
-          [0, Bd / Bs, 0],
-          [0, 0, Cd / Cs],
-        ],
-        Matrix.inv(this.MtxAdp),
+      );
+      let [Ad, Bd, Cd] = Matrix.multiply_triple_times_3x3(
+        this.Mtx_RefWhiteRGB,
+        this.MtxAdp,
+      );
+
+      XYZd = Matrix.multiply_triple_times_3x3(
+        XYZ,
+        Matrix.multiply_3x3_times_3x3(
+          this.MtxAdp,
+          Matrix.multiply_3x3_times_3x3(
+            [
+              [Ad / As, 0, 0],
+              [0, Bd / Bs, 0],
+              [0, 0, Cd / Cs],
+            ],
+            Matrix.inv(this.MtxAdp),
+          ),
+        ),
       );
     }
 
-    let RGB = multiply(XYZd, Matrix.inv(this.Mtx_RGB2XYZ));
+    let RGB = Matrix.multiply_triple_times_3x3(
+      XYZd,
+      Matrix.inv(this.Mtx_RGB2XYZ),
+    );
 
-    return RGB.map((v) => 255 * this.compand(v));
+    return RGB.map((v) => 255 * this.compand(v)) as NumericTriple;
   } // End XYZ_to_RGB
 
   /**
@@ -442,23 +451,33 @@ export default class ColorConverter {
     // Inverse compound the values
     RGB = RGB.map((v) => this.inverse_compand(v / 255)) as NumericTriple;
     // Linear RGB to XYZ
-    let XYZ = multiply(RGB, this.Mtx_RGB2XYZ);
+    let XYZ = Matrix.multiply_triple_times_3x3(RGB, this.Mtx_RGB2XYZ);
 
     // Adaptation if necessary
     if (this.Adaptation != "None") {
       // Get source/domain scale factors
-      let [As, Bs, Cs] = multiply(this.Mtx_RefWhiteRGB, this.MtxAdp);
-      let [Ad, Bd, Cd] = multiply(this.Mtx_RefWhite, this.MtxAdp);
-
-      return multiply(
-        XYZ,
+      let [As, Bs, Cs] = Matrix.multiply_triple_times_3x3(
+        this.Mtx_RefWhiteRGB,
         this.MtxAdp,
-        [
-          [Ad / As, 0, 0],
-          [0, Bd / Bs, 0],
-          [0, 0, Cd / Cs],
-        ],
-        Matrix.inv(this.MtxAdp),
+      );
+      let [Ad, Bd, Cd] = Matrix.multiply_triple_times_3x3(
+        this.Mtx_RefWhite,
+        this.MtxAdp,
+      );
+
+      return Matrix.multiply_triple_times_3x3(
+        XYZ,
+        Matrix.multiply_3x3_times_3x3(
+          this.MtxAdp,
+          Matrix.multiply_3x3_times_3x3(
+            [
+              [Ad / As, 0, 0],
+              [0, Bd / Bs, 0],
+              [0, 0, Cd / Cs],
+            ],
+            Matrix.inv(this.MtxAdp),
+          ),
+        ),
       );
     } else {
       return XYZ;
