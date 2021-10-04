@@ -130,4 +130,4 @@ This provides the following methods:
 * `.LCHab_to_XYZ`, `.LCHab_to_xyY`, `.LCHab_to_Lab`, `.LCHab_to_Luv`, `.LCHab_to_LCHuv`, `.LCHab_to_RGB`
 * `.Luv_to_XYZ`, `.Luv_to_xyY`, `.Luv_to_Lab`, `.Luv_to_LCHab`, `.Luv_to_LCHuv`, `.Luv_to_RGB`
 * `.LCHuv_to_XYZ`, `.LCHuv_to_xyY`, `.LCHuv_to_Lab`, `.LCHuv_to_LCHab`, `.LCHuv_to_Luv`, `.LCHuv_to_RGB`
-* `.RGB_to_XYZ`, `.RGB_to_xyY`, `.RGB_to_Lab`, `.RGB_to_LCHab`, `.RGB_to_Luv`, `.RGB_to_LCHuv`ssssssssssssssssssssssssssss
+* `.RGB_to_XYZ`, `.RGB_to_xyY`, `.RGB_to_Lab`, `.RGB_to_LCHab`, `.RGB_to_Luv`, `.RGB_to_LCHuv`
