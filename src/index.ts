@@ -1,6 +1,7 @@
 // See http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html for details on these computations.
 
-import { inv, multiply, transpose } from "mathjs";
+import { inv, multiply } from "mathjs";
+import { Matrix, Matrix_3x3 } from "./Matrix";
 
 // RefWhite Type
 type RefWhiteType =
@@ -42,12 +43,6 @@ type GammaModelType = "1.0" | "1.8" | "2.2" | "sRGB" | "L*";
 type AdaptationType = "Bradford" | "von Kries" | "XYZ Scaling" | "None";
 
 type NumericTriple = [number, number, number];
-
-type Matrix_3x3 = [
-  [number, number, number],
-  [number, number, number],
-  [number, number, number],
-];
 
 export default class ColorConverter {
   // Properties to be set on instantiation
@@ -293,7 +288,7 @@ export default class ColorConverter {
       [X_W, Y_W, Z_W],
     );
 
-    return transpose([
+    return Matrix.transpose([
       [S_r * X_r, S_g * X_g, S_b * X_b],
       [S_r * Y_r, S_g * Y_g, S_b * Y_b],
       [S_r * Z_r, S_g * Z_g, S_b * Z_b],
