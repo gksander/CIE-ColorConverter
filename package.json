@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc && parcel build src/browser.ts --out-dir ./dist.browser",
     "test": "jest --verbose",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --config=jest.config.js --watch"
   },
   "keywords": [
     "CIE",

@@ -4,13 +4,17 @@
     "declaration": true,
     "esModuleInterop": true,
     "jsx": "preserve",
-		"lib": [
+    "lib": [
+      "es6",
       "es7",
-			"dom"
-		],
+      "esnext",
+      "dom"
+    ],
     "target": "es5",
     "noImplicitAny": false,
     "outDir": "dist"
   },
-  "include": ["src/index.ts"]
+  "include": [
+    "src/index.ts"
+  ]
 }

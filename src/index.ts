@@ -1,6 +1,6 @@
 // See http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html for details on these computations.
 
-import { inv, multiply } from "mathjs";
+import { multiply } from "mathjs";
 import { Matrix, Matrix_3x3 } from "./Matrix";
 
 // RefWhite Type
@@ -280,7 +280,7 @@ export default class ColorConverter {
       Z_W = RW_RGB[2];
 
     let [S_r, S_g, S_b] = multiply(
-      inv([
+      Matrix.inv([
         [X_r, X_g, X_b],
         [Y_r, Y_g, Y_b],
         [Z_r, Z_g, Z_b],
@@ -424,11 +424,11 @@ export default class ColorConverter {
           [0, Bd / Bs, 0],
           [0, 0, Cd / Cs],
         ],
-        inv(this.MtxAdp),
+        Matrix.inv(this.MtxAdp),
       );
     }
 
-    let RGB = multiply(XYZd, inv(this.Mtx_RGB2XYZ));
+    let RGB = multiply(XYZd, Matrix.inv(this.Mtx_RGB2XYZ));
 
     return RGB.map((v) => 255 * this.compand(v));
   } // End XYZ_to_RGB
@@ -439,7 +439,7 @@ export default class ColorConverter {
    * NOTE: This assumes RGB is scaled from [0, 255], XYZ in [0, 1]
    */
   RGB_to_XYZ(RGB: NumericTriple): NumericTriple {
-    // Invers compound the values
+    // Inverse compound the values
     RGB = RGB.map((v) => this.inverse_compand(v / 255)) as NumericTriple;
     // Linear RGB to XYZ
     let XYZ = multiply(RGB, this.Mtx_RGB2XYZ);
@@ -458,7 +458,7 @@ export default class ColorConverter {
           [0, Bd / Bs, 0],
           [0, 0, Cd / Cs],
         ],
-        inv(this.MtxAdp),
+        Matrix.inv(this.MtxAdp),
       );
     } else {
       return XYZ;
@@ -858,4 +858,4 @@ export default class ColorConverter {
   RGB_to_LCHuv(RGB: NumericTriple): NumericTriple {
     return this.Luv_to_LCHuv(this.RGB_to_Luv(RGB));
   }
-} // Env class definition
+} // End class definition
