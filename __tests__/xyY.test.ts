@@ -1,14 +1,14 @@
-import CIECC from '../src/index';
+import { ColorConverter } from "../src/index";
 type NT = [number, number, number];
 
-describe('xyY conversion', () => {
-  let converter = new CIECC();
+describe("xyY conversion", () => {
+  let converter = new ColorConverter();
 
   // Start with default values for RefWhite/RGG/etc.
   let xyY: NT = [0.5, 0.5, 0.5];
 
   // xyY
-  test('xyY to XYZ (defaults)', () => {
+  test("xyY to XYZ (defaults)", () => {
     let [X, Y, Z] = converter.xyY_to_XYZ(xyY);
     expect(X).toBeCloseTo(0.5);
     expect(Y).toBeCloseTo(0.5);
@@ -16,7 +16,7 @@ describe('xyY conversion', () => {
   });
 
   // Lab
-  test('xyY to Lab (defaults)', () => {
+  test("xyY to Lab (defaults)", () => {
     let [L, a, b] = converter.xyY_to_Lab(xyY);
     expect(L).toBeCloseTo(76.0693);
     expect(a).toBeCloseTo(4.8492);
@@ -24,7 +24,7 @@ describe('xyY conversion', () => {
   });
 
   // LCHab
-  test('xyY to LCHab (defaults)', () => {
+  test("xyY to LCHab (defaults)", () => {
     let [L, C, H] = converter.xyY_to_LCHab(xyY);
     expect(L).toBeCloseTo(76.0693);
     expect(C).toBeCloseTo(131.2435);
@@ -32,7 +32,7 @@ describe('xyY conversion', () => {
   });
 
   // Luv
-  test('xyY to Luv (defaults)', () => {
+  test("xyY to Luv (defaults)", () => {
     let [L, u, v] = converter.xyY_to_Luv(xyY);
     expect(L).toBeCloseTo(76.0693);
     expect(u).toBeCloseTo(40.3866);
@@ -40,7 +40,7 @@ describe('xyY conversion', () => {
   });
 
   // LCHuv
-  test('xyY to LCHuv (defaults)', () => {
+  test("xyY to LCHuv (defaults)", () => {
     let [L, C, H] = converter.xyY_to_LCHuv(xyY);
     expect(L).toBeCloseTo(76.0693);
     expect(C).toBeCloseTo(83.9531);
@@ -48,11 +48,10 @@ describe('xyY conversion', () => {
   });
 
   // RGB
-  test('xyY to RGB (defaults)', () => {
+  test("xyY to RGB (defaults)", () => {
     let [R, G, B] = converter.xyY_to_RGB(xyY);
     expect(R).toBeCloseTo(225.7329, 1);
     expect(G).toBeCloseTo(182.1575, 1);
     expect(B).toBeCloseTo(-79.1162, 1);
   });
-
 });

@@ -1,5 +1,5 @@
-import ColorConvertor from './index'
+import { ColorConverter } from "./index";
 
 if (window) {
-  (<any>window).CIEColorConvertor = ColorConvertor;
+  (<any>window).CIEColorConvertor = ColorConverter;
 }

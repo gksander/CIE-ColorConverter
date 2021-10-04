@@ -41,7 +41,7 @@ type GammaModelType = "1.0" | "1.8" | "2.2" | "sRGB" | "L*";
 // Adaptation type
 type AdaptationType = "Bradford" | "von Kries" | "XYZ Scaling" | "None";
 
-export default class ColorConverter {
+export class ColorConverter {
   // Properties to be set on instantiation
   RefWhite: RefWhiteType = "D50";
   RgbModel: RGBModelType = "sRGB";
@@ -51,12 +51,17 @@ export default class ColorConverter {
   kK = 24389 / 27;
 
   // Constructor
-  constructor(
-    RefWhite: RefWhiteType = "D50",
-    RgbModel: RGBModelType = "sRGB",
-    GammaModel: GammaModelType = "sRGB",
-    Adaptation: AdaptationType = "Bradford",
-  ) {
+  constructor({
+    RefWhite = "D50",
+    RgbModel = "sRGB",
+    GammaModel = "sRGB",
+    Adaptation = "Bradford",
+  }: {
+    RefWhite?: RefWhiteType;
+    RgbModel?: RGBModelType;
+    GammaModel?: GammaModelType;
+    Adaptation?: AdaptationType;
+  } = {}) {
     this.RefWhite = RefWhite;
     this.RgbModel = RgbModel;
     this.GammaModel = GammaModel;

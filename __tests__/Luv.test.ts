@@ -1,14 +1,14 @@
-import CIECC from '../src/index';
+import { ColorConverter } from "../src/index";
 type NT = [number, number, number];
 
-describe('Luv conversion', () => {
-  let converter = new CIECC();
+describe("Luv conversion", () => {
+  let converter = new ColorConverter();
 
   // Start with default values for RefWhite/RGG/etc.
   let Luv: NT = [55, -17, -85];
 
   // XYZ
-  test('Luv to XYZ (defaults)', () => {
+  test("Luv to XYZ (defaults)", () => {
     let [X, Y, Z] = converter.Luv_to_XYZ(Luv);
     expect(X).toBeCloseTo(0.259061, 4);
     expect(Y).toBeCloseTo(0.229298, 4);
@@ -16,7 +16,7 @@ describe('Luv conversion', () => {
   });
 
   // xyY
-  test('Luv to xyY (defaults)', () => {
+  test("Luv to xyY (defaults)", () => {
     let [x, y, Y] = converter.Luv_to_xyY(Luv);
     expect(x).toBeCloseTo(0.231562, 4);
     expect(y).toBeCloseTo(0.204958, 4);
@@ -24,7 +24,7 @@ describe('Luv conversion', () => {
   });
 
   // Lab
-  test('Luv to Lab (defaults)', () => {
+  test("Luv to Lab (defaults)", () => {
     let [L, a, b] = converter.Luv_to_Lab(Luv);
     expect(L).toBeCloseTo(55);
     expect(a).toBeCloseTo(16.6011);
@@ -32,7 +32,7 @@ describe('Luv conversion', () => {
   });
 
   // LCHab
-  test('Luv to LCHab (defaults)', () => {
+  test("Luv to LCHab (defaults)", () => {
     let [L, C, H] = converter.Luv_to_LCHab(Luv);
     expect(L).toBeCloseTo(55);
     expect(C).toBeCloseTo(62.6552);
@@ -40,7 +40,7 @@ describe('Luv conversion', () => {
   });
 
   // LCHuv
-  test('Luv to LCHuv (defaults)', () => {
+  test("Luv to LCHuv (defaults)", () => {
     let [L, C, H] = converter.Luv_to_LCHuv(Luv);
     expect(L).toBeCloseTo(55);
     expect(C).toBeCloseTo(86.6833);
@@ -48,11 +48,10 @@ describe('Luv conversion', () => {
   });
 
   // RGB
-  test('Luv to RGB (defaults)', () => {
+  test("Luv to RGB (defaults)", () => {
     let [R, G, B] = converter.Luv_to_RGB(Luv);
     expect(R).toBeCloseTo(101.6228);
     expect(G).toBeCloseTo(125.5121);
     expect(B).toBeCloseTo(237.6312);
   });
-
 });

@@ -1,6 +1,6 @@
 # CIE Color Convertor
 
-This project is motivated by [http://www.brucelindbloom.com/](Bruce Lindbloom), and consists of a CIE color model converter. E.g., it will allow you to convert between XYZ, xyY, RGB, Luv, etc. color models.
+This project is motivated by [http://www.brucelindbloom.com](Bruce Lindbloom), and consists of a CIE color model converter. E.g., it will allow you to convert between XYZ, xyY, RGB, Luv, etc. color models.
 
 ## Usage
 
@@ -10,37 +10,31 @@ Install the package via
 npm i cie-colorconvertor
 ```
 
-If you're using ES6 modules, you can import the convertor class via
+Import the converter class via:
 
 ```js
-import CIECC from 'cie-colorconvertor'
+import { ColorConverter } from 'cie-colorconvertor'
 ```
 
-To use the color convertor, you'll need to instantiate an instance of the CIECC class:
+To use the color convertor, you'll need to instantiate an instance of the `ColorConverter` class:
 
 ```js
-import CIECC from 'cie-colorconvertor'
+import { ColorConverter } from 'cie-colorconvertor'
 
-let convertor = new CIECC();
+const convertor = new ColorConverter();
 ```
 
 Then, you can use the `convertor` instance to convert between profiles. Here's an example:
 
 ```js
-import CIECC from 'cie-colorconvertor'
+import { ColorConverter } from 'cie-colorconvertor'
 
-let convertor = new CIECC();
+const convertor = new ColorConverter();
 
-let XYZ = convertor.RGB_to_XYZ([150, 100, 232]);
+const XYZ = convertor.RGB_to_XYZ([150, 100, 232]);
 ```
 
 This will convert the RGB triple `[150, 100, 232]` to an XYZ triple.
-
-*NOTE*: CIECC is a generic name. Due to default exports, you can import the color converter under any name. E.g., you could just as well use:
-
-```js
-import ColorConverter from 'cie-colorconverter'
-```
 
 ## Browser Usage
 
@@ -57,14 +51,14 @@ There are a few independent variables/parameters when it comes to color model co
 
 See, for example, [http://www.brucelindbloom.com/](http://www.brucelindbloom.com/) for more information on these values.
 
-The `CIECC` class allows you to adjust these values. They are public properties on the `CIECC` class that you can adjust via public properties. For example:
+The `ColorConverter` class allows you to adjust these values (during construction, or after the fact). They are public properties on the `ColorConverter` class that you can adjust via public properties. For example:
 
-* `CIECC.RefWhite = "D50"`. Possible values:
+* `ColorConverter().RefWhite = "D50"`. Possible values:
   ```ts
     "A" | "B" | "C" | "D50" | "D55" | "D65" | "D75" | "E" | "F2" | "F7" | "F11"
   ```
   "D50" is the default value.
-* `CIECC.RgbModel = "sRGB"`. Possible values:
+* `ColorConverter().RgbModel = "sRGB"`. Possible values:
   ```ts
   "Adobe RGB (1998)" |
   "AppleRGB" |
@@ -84,12 +78,12 @@ The `CIECC` class allows you to adjust these values. They are public properties 
   "Wide Gamut RGB"
   ```
   "sRGB" is the default.
-* `CIECC.GammaModel = "sRGB"`. Possible values:
+* `ColorConverter().GammaModel = "sRGB"`. Possible values:
   ```ts
   "1.0" | "1.8" | "2.2" | "sRGB" | "L*"
   ```
   "sRGB" is the default.
-* `CIECC.Adaptation = "Bradford"`. Possible values:
+* `ColorConverter().Adaptation = "Bradford"`. Possible values:
   ```ts
   "Bradford" | "von Kries" | "XYZ Scaling" | "None"
   ```
@@ -98,17 +92,22 @@ The `CIECC` class allows you to adjust these values. They are public properties 
 These values can also be set via the converter's class constructor method. The constructor has the following form:
 
 ```js
-constructor(RefWhite, RgbModel, GammaModel, Adaptation)
+constructor({ RefWhite, RgbModel, GammaModel, Adaptation });
 ```
 
 As an example, you could set some parameter values initially via:
 
 ```js
-import CIECC from 'cie-colorconverter'
+import { ColorConverter } from 'cie-colorconverter'
 
-let converter = new CIECC("D65", "Adobe RGB (1998)", "sRGB", "XYZ Scaling");
+const converter = new ColorConverter({
+  RefWhite: "D65",
+  RgbModel: "Adobe RGB (1998)",
+  GammaModel: "sRGB",
+  Adaptation: "XYZ Scaling"
+});
 
-...
+// ...
 ```
 
 ## Methods
@@ -131,4 +130,4 @@ This provides the following methods:
 * `.LCHab_to_XYZ`, `.LCHab_to_xyY`, `.LCHab_to_Lab`, `.LCHab_to_Luv`, `.LCHab_to_LCHuv`, `.LCHab_to_RGB`
 * `.Luv_to_XYZ`, `.Luv_to_xyY`, `.Luv_to_Lab`, `.Luv_to_LCHab`, `.Luv_to_LCHuv`, `.Luv_to_RGB`
 * `.LCHuv_to_XYZ`, `.LCHuv_to_xyY`, `.LCHuv_to_Lab`, `.LCHuv_to_LCHab`, `.LCHuv_to_Luv`, `.LCHuv_to_RGB`
-* `.RGB_to_XYZ`, `.RGB_to_xyY`, `.RGB_to_Lab`, `.RGB_to_LCHab`, `.RGB_to_Luv`, `.RGB_to_LCHuv`
+* `.RGB_to_XYZ`, `.RGB_to_xyY`, `.RGB_to_Lab`, `.RGB_to_LCHab`, `.RGB_to_Luv`, `.RGB_to_LCHuv`ssssssssssssssssssssssssssss
