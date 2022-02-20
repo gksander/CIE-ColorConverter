@@ -1,4 +1,4 @@
-# CIE Color Convertor
+# CIE Color Converter
 
 This project is motivated by [Bruce Lindbloom](http://www.brucelindbloom.com), and consists of a CIE color model converter. E.g., it will allow you to convert between XYZ, xyY, RGB, Luv, etc. color models.
 
