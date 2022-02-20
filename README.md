@@ -36,10 +36,6 @@ const XYZ = converter.RGB_to_XYZ([150, 100, 232]);
 
 This will convert the RGB triple `[150, 100, 232]` to an XYZ triple.
 
-## Browser Usage
-
-The npm packages ships with a browser-ready version at `node_modules/cie-colorconverter/dist.browser/browser.js`. This will expose a global variable at `window.CIEColorConverter` and is used the same as the ES6 version.
-
 ## Converter Options
 
 There are a few independent variables/parameters when it comes to color model conversions, including:
