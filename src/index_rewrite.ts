@@ -263,21 +263,6 @@ export class ColorConverter {
   }
 
   /**
-   * Luv to LCHuv
-   * @param Luv Luv triple
-   */
-  Luv_to_LCHuv(Luv: NumericTriple): NumericTriple {
-    let [L, u, v] = Luv;
-    let H = (180 / Math.PI) * Math.atan2(v, u);
-
-    return [
-      L,
-      Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2)),
-      H + (H >= 0 ? 0 : 360),
-    ];
-  }
-
-  /**
    * @param xyY xyY Triple
    */
   xyY_to_Lab(xyY: NumericTriple): NumericTriple {

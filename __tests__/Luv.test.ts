@@ -40,12 +40,6 @@ describe("Luv conversion", () => {
   });
 
   // LCHuv
-  test("Luv to LCHuv (defaults)", () => {
-    let [L, C, H] = converter.Luv_to_LCHuv(Luv);
-    expect(L).toBeCloseTo(55);
-    expect(C).toBeCloseTo(86.6833);
-    expect(H).toBeCloseTo(258.6901);
-  });
 
   // RGB
   test("Luv to RGB (defaults)", () => {
