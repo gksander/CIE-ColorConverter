@@ -42,34 +42,13 @@ export class ColorConverter {
   }
 
   /**
-   * Convert Lab to RGB
-   * @param Lab Lab triple
-   * Note: RGB in [0, 255]
-   */
-  Lab_to_RGB(Lab: NumericTriple) {
-    return this.XYZ_to_RGB(this.Lab_to_XYZ(Lab));
-  }
-
-  /**
    * Convert RGB to Lab
    * @param RGB RGB triple in range [0, 255]
    */
   RGB_to_Lab(RGB: NumericTriple) {
     return this.XYZ_to_Lab(this.RGB_to_XYZ(RGB));
   }
-
-  /**
-   * LCH triple to Lab triple
-   * @param LCH LCH Triple
-   */
-  LCHab_to_Lab(LCH: NumericTriple): NumericTriple {
-    let [L, C, H] = LCH;
-    return [
-      L,
-      C * Math.cos((H * Math.PI) / 180),
-      C * Math.sin((H * Math.PI) / 180),
-    ];
-  }
+}
 
   /**
    * @param XYZ XYZ Triple
