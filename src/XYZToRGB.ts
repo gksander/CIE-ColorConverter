@@ -9,14 +9,14 @@ import { getRgbToXyzMtx } from "./getRgbToXyzMtx";
 
 /**
  * XYZ to RGB
- * @param xyz
+ * @param XYZ
  * @param adaptation
  * @param refWhite
  * @param rgbModel
  * @param gammaModel
  */
-export const xyzToRgb = (
-  xyz: NumericTriple,
+export const XYZToRGB = (
+  XYZ: NumericTriple,
   {
     adaptation = DEFAULT_OPTIONS.ADAPTION,
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
@@ -24,7 +24,7 @@ export const xyzToRgb = (
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
   }: Options = {},
 ): NumericTriple => {
-  let xyzD = xyz;
+  let XYZd = XYZ;
   const mtxAdp = getMtxAdaptation(adaptation);
 
   if (adaptation != "None") {
@@ -38,8 +38,8 @@ export const xyzToRgb = (
       mtxAdp,
     );
 
-    xyzD = Matrix.multiply_triple_times_3x3(
-      xyz,
+    XYZd = Matrix.multiply_triple_times_3x3(
+      XYZ,
       Matrix.multiply_3x3_times_3x3(
         mtxAdp,
         Matrix.multiply_3x3_times_3x3(
@@ -54,7 +54,10 @@ export const xyzToRgb = (
     );
   }
 
-  let RGB = Matrix.multiply_triple_times_3x3(xyzD, getRgbToXyzMtx(rgbModel));
+  const RGB = Matrix.multiply_triple_times_3x3(
+    XYZd,
+    Matrix.inv(getRgbToXyzMtx(rgbModel)),
+  );
 
   return RGB.map((v) => 255 * compand(v, gammaModel)) as NumericTriple;
 };
