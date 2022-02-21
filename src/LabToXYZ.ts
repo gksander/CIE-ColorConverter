@@ -7,7 +7,7 @@ import { Options } from "./types";
  * Convert Lab to XYZ
  * XYZ in range [0, 1]
  */
-export const labToXyz = (
+export const LabToXYZ = (
   Lab: NumericTriple,
   { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
 ): NumericTriple => {

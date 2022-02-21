@@ -6,13 +6,13 @@ import { Options } from "./types";
 /**
  * Converts Lab triple to XYZ tripe in range [0, 1]
  */
-export const xyzToLab = (
-  xyz: NumericTriple,
+export const XYZToLab = (
+  XYZ: NumericTriple,
   { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
 ): NumericTriple => {
-  const X = xyz[0],
-    Y = xyz[1],
-    Z = xyz[2],
+  const X = XYZ[0],
+    Y = XYZ[1],
+    Z = XYZ[2],
     RefWhite = getRefWhiteMtx(refWhite),
     X_r = RefWhite[0],
     Y_r = RefWhite[1],

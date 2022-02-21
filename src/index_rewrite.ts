@@ -221,38 +221,6 @@ export class ColorConverter {
   }
 
   /**
-   * Convert xyY triple to XYZ triple
-   * @param xyY xyY triple
-   */
-  xyY_to_XYZ(xyY: NumericTriple): NumericTriple {
-    let [x, y, Y] = xyY;
-    if (y < 0.000001) {
-      return [0, 0, 0];
-    } else {
-      return [(x * Y) / y, Y, ((1 - x - y) * Y) / y];
-    }
-  } // End xyY_to_XYZ
-
-  /**
-   * Convert XYZ to xyY
-   * @param XYZ XYZ triple in [0, 1]
-   */
-  XYZ_to_xyY(XYZ: NumericTriple): NumericTriple {
-    let [X, Y, Z] = XYZ,
-      Den = X + Y + Z;
-    // Non-zero Den:
-    if (Den > 0) {
-      return [X / Den, Y / Den, Y];
-    }
-    // Zero den
-    else {
-      let [RW_X, RW_Y, RW_Z] = this.Mtx_RefWhite,
-        RW_Den = RW_X + RW_Y + RW_Z;
-      return [RW_X / RW_Den, RW_Y / RW_Den, Y];
-    }
-  }
-
-  /**
    * Lab triple to LCH triple
    * @param Lab Lab triple
    */
