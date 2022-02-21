@@ -2,84 +2,7 @@
 
 import { Matrix, Matrix_3x3, NumericTriple } from "./Matrix";
 
-// RefWhite Type
-type RefWhiteType =
-  | "A"
-  | "B"
-  | "C"
-  | "D50"
-  | "D55"
-  | "D65"
-  | "D75"
-  | "E"
-  | "F2"
-  | "F7"
-  | "F11";
-
-// RGB Model
-type RGBModelType =
-  | "Adobe RGB (1998)"
-  | "AppleRGB"
-  | "Best RGB"
-  | "Beta RGB"
-  | "Bruce RGB"
-  | "CIE RGB"
-  | "ColorMatch RGB"
-  | "Don RGB 4"
-  | "ECI RGB v2"
-  | "Ekta Space PS5"
-  | "NTSC RGB"
-  | "PAL/SECAM RGB"
-  | "ProPhoto RGB"
-  | "SMPTE-C RGB"
-  | "sRGB"
-  | "Wide Gamut RGB";
-
-// Gamma Type
-type GammaModelType = "1.0" | "1.8" | "2.2" | "sRGB" | "L*";
-
-// Adaptation type
-type AdaptationType = "Bradford" | "von Kries" | "XYZ Scaling" | "None";
-
 export class ColorConverter {
-  // Computed: RefWhite RGB Matrix
-  get Mtx_RefWhiteRGB(): NumericTriple {
-    switch (this.RgbModel) {
-      case "Adobe RGB (1998)":
-        return [0.95047, 1, 1.08883];
-      case "AppleRGB":
-        return [0.95047, 1, 1.08883];
-      case "Best RGB":
-        return [0.96422, 1, 0.82521];
-      case "Beta RGB":
-        return [0.96422, 1, 0.82521];
-      case "Bruce RGB":
-        return [0.95047, 1, 1.08883];
-      case "CIE RGB":
-        return [1, 1, 1];
-      case "ColorMatch RGB":
-        return [0.96422, 1, 0.82521];
-      case "Don RGB 4":
-        return [0.96422, 1, 0.82521];
-      case "ECI RGB v2":
-        return [0.96422, 1, 0.82521];
-      case "Ekta Space PS5":
-        return [0.96422, 1, 0.82521];
-      case "NTSC RGB":
-        return [0.98074, 1, 1.18232];
-      case "PAL/SECAM RGB":
-        return [0.95047, 1, 1.08883];
-      case "ProPhoto RGB":
-        return [0.96422, 1, 0.82521];
-      case "SMPTE-C RGB":
-        return [0.95047, 1, 1.08883];
-      case "sRGB":
-        return [0.95047, 1, 1.08883];
-      case "Wide Gamut RGB":
-        return [0.96422, 1, 0.82521];
-    }
-  }
-
   // Computed: GammaRGB + Index
   get GammaRGB(): { value: number; index: number } {
     switch (this.RgbModel) {
@@ -218,21 +141,6 @@ export class ColorConverter {
    */
   RGB_to_Lab(RGB: NumericTriple) {
     return this.XYZ_to_Lab(this.RGB_to_XYZ(RGB));
-  }
-
-  /**
-   * Lab triple to LCH triple
-   * @param Lab Lab triple
-   */
-  Lab_to_LCHab(Lab: NumericTriple): NumericTriple {
-    let [L, a, b] = Lab;
-
-    let H = (180 / Math.PI) * Math.atan2(b, a);
-    return [
-      L,
-      Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)),
-      H + (H >= 0 ? 0 : 360),
-    ];
   }
 
   /**
