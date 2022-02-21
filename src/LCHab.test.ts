@@ -1,4 +1,4 @@
-import { LCHabToLab } from "./LCHabToLab";
+import { LCHabToLab } from "./LCHab";
 
 describe("LCHabToLab", () => {
   test("LCHab to Lab (defaults)", () => {
