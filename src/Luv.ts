@@ -1,7 +1,18 @@
 import { NumericTriple } from "./Matrix";
 import { DEFAULT_OPTIONS, kE, kK } from "./consts";
-import { getRefWhiteMtx } from "./getRefWhiteMtx";
 import { Options } from "./types";
+import { getRefWhiteMtx } from "./getRefWhiteMtx";
+
+export const LuvToLCHuv = (Luv: NumericTriple): NumericTriple => {
+  const [L, u, v] = Luv;
+  const H = (180 / Math.PI) * Math.atan2(v, u);
+
+  return [
+    L,
+    Math.sqrt(Math.pow(u, 2) + Math.pow(v, 2)),
+    H + (H >= 0 ? 0 : 360),
+  ];
+};
 
 export const LuvToXYZ = (
   Luv: NumericTriple,
