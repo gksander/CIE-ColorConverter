@@ -42,15 +42,6 @@ export class ColorConverter {
   }
 
   /**
-   * Convert RGB to Lab
-   * @param RGB RGB triple in range [0, 255]
-   */
-  RGB_to_Lab(RGB: NumericTriple) {
-    return this.XYZ_to_Lab(this.RGB_to_XYZ(RGB));
-  }
-}
-
-  /**
    * @param XYZ XYZ Triple
    */
   XYZ_to_LCHab(XYZ: NumericTriple): NumericTriple {

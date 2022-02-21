@@ -24,12 +24,6 @@ describe("RGB conversion", () => {
   });
 
   // Lab
-  test("RGB to Lab (defaults)", () => {
-    let [L, a, b] = converter.RGB_to_Lab(RGB);
-    expect(L).toBeCloseTo(79.3334);
-    expect(a).toBeCloseTo(-63.5786);
-    expect(b).toBeCloseTo(46.1494);
-  });
 
   // LCHab
   test("RGB to LCHab (defaults)", () => {
