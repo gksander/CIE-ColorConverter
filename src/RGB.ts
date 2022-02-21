@@ -6,6 +6,7 @@ import { getMtxAdaptation } from "./getMtxAdaptation";
 import { getRefWhiteRgbMtx } from "./getRefWhiteRgbMtx";
 import { getRefWhiteMtx } from "./getRefWhiteMtx";
 import { getRgbToXyzMtx } from "./getRgbToXyzMtx";
+import { XYZToLab } from "./XYZToLab";
 
 /**
  * NOTE: This assumes RGB is scaled from [0, 255], XYZ in [0, 1]
@@ -56,4 +57,19 @@ export const RGBToXYZ = (
   } else {
     return XYZ;
   }
+};
+
+export const RGBToLab = (
+  RGB: NumericTriple,
+  {
+    adaptation = DEFAULT_OPTIONS.ADAPTION,
+    rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
+    gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
+    refWhite = DEFAULT_OPTIONS.REF_WHITE,
+  }: Options = {},
+): NumericTriple => {
+  return XYZToLab(
+    RGBToXYZ(RGB, { adaptation, rgbModel, gammaModel, refWhite }),
+    { refWhite },
+  );
 };
