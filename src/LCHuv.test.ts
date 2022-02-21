@@ -1,6 +1,6 @@
-import { LCHuvToLuv } from "./LCHuvToLuv";
+import { LCHuvToLuv } from "./LCHuv";
 
-describe("LCHuvToLuv", () => {
+describe("LCHuv", () => {
   test("LCHuv to Luv (defaults)", () => {
     let [L, u, v] = LCHuvToLuv([55, 82, 250]);
     expect(L).toBeCloseTo(55);
