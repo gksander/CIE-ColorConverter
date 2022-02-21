@@ -42,13 +42,6 @@ export class ColorConverter {
   }
 
   /**
-   * @param XYZ XYZ Triple
-   */
-  XYZ_to_LCHab(XYZ: NumericTriple): NumericTriple {
-    return this.Lab_to_LCHab(this.XYZ_to_Lab(XYZ));
-  }
-
-  /**
    * @param XYZ XYZ triple
    */
   XYZ_to_LCHuv(XYZ: NumericTriple): NumericTriple {

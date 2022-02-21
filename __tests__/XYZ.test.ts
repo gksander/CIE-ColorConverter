@@ -16,20 +16,8 @@ describe("XYZ conversion", () => {
   });
 
   // LCHab
-  test("XYZ to LCHab (defaults)", () => {
-    let [L, C, H] = converter.XYZ_to_LCHab(XYZ);
-    expect(L).toBeCloseTo(76.0693);
-    expect(C).toBeCloseTo(11.564);
-    expect(H).toBeCloseTo(294.7929);
-  });
 
   // LCHuv
-  test("XYZ to LCHuv (defaults)", () => {
-    let [L, C, H] = converter.XYZ_to_LCHuv(XYZ);
-    expect(L).toBeCloseTo(76.0693);
-    expect(C).toBeCloseTo(14.2935);
-    expect(H).toBeCloseTo(275.424);
-  });
 
   // RGB
   test("XYZ to RGB (defaults)", () => {

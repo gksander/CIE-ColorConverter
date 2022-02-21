@@ -6,6 +6,8 @@ import { getMtxAdaptation } from "./getMtxAdaptation";
 import { getRefWhiteRgbMtx } from "./getRefWhiteRgbMtx";
 import { getRgbToXyzMtx } from "./getRgbToXyzMtx";
 import { compand } from "./compand";
+import { LabToLCHab } from "./Lab";
+import { LuvToLCHuv } from "./Luv";
 
 /**
  * Converts Lab triple to XYZ tripe in range [0, 1]
@@ -122,4 +124,18 @@ export const XYZToxyY = (
       RW_Den = RW_X + RW_Y + RW_Z;
     return [RW_X / RW_Den, RW_Y / RW_Den, Y];
   }
+};
+
+export const XYZToLCHab = (
+  XYZ: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return LabToLCHab(XYZToLab(XYZ, { refWhite }));
+};
+
+export const XYZToLCHuv = (
+  XYZ: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return LuvToLCHuv(XYZToLuv(XYZ, { refWhite }));
 };

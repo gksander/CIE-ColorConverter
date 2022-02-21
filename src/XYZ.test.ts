@@ -1,4 +1,11 @@
-import { XYZToLab, XYZToLuv, XYZToRGB, XYZToxyY } from "./XYZ";
+import {
+  XYZToLab,
+  XYZToLCHab,
+  XYZToLCHuv,
+  XYZToLuv,
+  XYZToRGB,
+  XYZToxyY,
+} from "./XYZ";
 
 describe("xyY", () => {
   test("XYZ to Lab (defaults)", () => {
@@ -27,5 +34,19 @@ describe("xyY", () => {
     expect(x).toBeCloseTo(0.333333);
     expect(y).toBeCloseTo(0.333333);
     expect(Y).toBeCloseTo(0.5);
+  });
+
+  test("XYZ to LCHab (defaults)", () => {
+    const [L, C, H] = XYZToLCHab([0.5, 0.5, 0.5]);
+    expect(L).toBeCloseTo(76.0693);
+    expect(C).toBeCloseTo(11.564);
+    expect(H).toBeCloseTo(294.7929);
+  });
+
+  test("XYZ to LCHuv (defaults)", () => {
+    const [L, C, H] = XYZToLCHuv([0.5, 0.5, 0.5]);
+    expect(L).toBeCloseTo(76.0693);
+    expect(C).toBeCloseTo(14.2935);
+    expect(H).toBeCloseTo(275.424);
   });
 });
