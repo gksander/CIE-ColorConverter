@@ -77,7 +77,7 @@ export const getRgbToXyzMtx = (rgbModel: RGBModelType): Matrix_3x3 => {
     }
   } // End switch
 
-  let X_r = xr / yr,
+  const X_r = xr / yr,
     Y_r = 1,
     Z_r = (1 - xr - yr) / yr,
     X_g = xg / yg,
@@ -91,7 +91,7 @@ export const getRgbToXyzMtx = (rgbModel: RGBModelType): Matrix_3x3 => {
     Y_W = RW_RGB[1],
     Z_W = RW_RGB[2];
 
-  let [S_r, S_g, S_b] = Matrix.multiply_3x3_times_triple(
+  const [S_r, S_g, S_b] = Matrix.multiply_3x3_times_triple(
     Matrix.inv([
       [X_r, X_g, X_b],
       [Y_r, Y_g, Y_b],

@@ -15,14 +15,6 @@ describe("XYZ conversion", () => {
     expect(Y).toBeCloseTo(0.5);
   });
 
-  // Lab
-  test("XYZ to Lab (defaults)", () => {
-    let [L, a, b] = converter.XYZ_to_Lab(XYZ);
-    expect(L).toBeCloseTo(76.0693);
-    expect(a).toBeCloseTo(4.8492);
-    expect(b).toBeCloseTo(-10.4981);
-  });
-
   // LCHab
   test("XYZ to LCHab (defaults)", () => {
     let [L, C, H] = converter.XYZ_to_LCHab(XYZ);
