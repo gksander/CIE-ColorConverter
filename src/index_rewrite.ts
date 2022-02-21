@@ -256,26 +256,6 @@ export class ColorConverter {
   }
 
   /**
-   * @param XYZ XYZ Triple
-   */
-  XYZ_to_Luv(XYZ: NumericTriple): NumericTriple {
-    let [X, Y, Z] = XYZ,
-      RefWhite = this.Mtx_RefWhite,
-      X_r = RefWhite[0],
-      Y_r = RefWhite[1],
-      Z_r = RefWhite[2],
-      Den = X + 15 * Y + 3 * Z,
-      up = Den > 0 ? (4 * X) / Den : 0,
-      vp = Den > 0 ? (9 * Y) / Den : 0,
-      urp = (4 * X_r) / (X_r + 15 * Y_r + 3 * Z_r),
-      vrp = (9 * Y_r) / (X_r + 15 * Y_r + 3 * Z_r),
-      yr = Y / Y_r,
-      L = yr > this.kE ? 116 * Math.pow(yr, 1 / 3) - 16 : this.kK * yr;
-
-    return [L, 13 * L * (up - urp), 13 * L * (vp - vrp)];
-  }
-
-  /**
    * @param XYZ XYZ triple
    */
   XYZ_to_LCHuv(XYZ: NumericTriple): NumericTriple {

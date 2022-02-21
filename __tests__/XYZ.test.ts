@@ -23,14 +23,6 @@ describe("XYZ conversion", () => {
     expect(H).toBeCloseTo(294.7929);
   });
 
-  // Luv
-  test("XYZ to Luv (defaults)", () => {
-    let [L, u, v] = converter.XYZ_to_Luv(XYZ);
-    expect(L).toBeCloseTo(76.0693);
-    expect(u).toBeCloseTo(1.3511);
-    expect(v).toBeCloseTo(-14.2295);
-  });
-
   // LCHuv
   test("XYZ to LCHuv (defaults)", () => {
     let [L, C, H] = converter.XYZ_to_LCHuv(XYZ);
