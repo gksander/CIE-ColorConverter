@@ -11,3 +11,6 @@ export const DEFAULT_OPTIONS = {
   GAMMA_MODEL: "sRGB" as GammaModelType,
   ADAPTION: "Bradford" as AdaptationType,
 } as const;
+
+export const kE = 216 / 24389;
+export const kK = 24389 / 27;
