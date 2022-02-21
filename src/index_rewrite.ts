@@ -384,19 +384,6 @@ export class ColorConverter {
   /**
    * @param LCH NumericTriple
    */
-  LCHuv_to_Luv(LCH: NumericTriple): NumericTriple {
-    let [L, C, H] = LCH;
-
-    return [
-      L,
-      C * Math.cos((H * Math.PI) / 180),
-      C * Math.sin((H * Math.PI) / 180),
-    ];
-  }
-
-  /**
-   * @param LCH NumericTriple
-   */
   LCHuv_to_XYZ(LCH: NumericTriple): NumericTriple {
     return this.Luv_to_XYZ(this.LCHuv_to_Luv(LCH));
   }
