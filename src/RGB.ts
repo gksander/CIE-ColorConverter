@@ -6,7 +6,7 @@ import { getMtxAdaptation } from "./getMtxAdaptation";
 import { getRefWhiteRgbMtx } from "./getRefWhiteRgbMtx";
 import { getRefWhiteMtx } from "./getRefWhiteMtx";
 import { getRgbToXyzMtx } from "./getRgbToXyzMtx";
-import { XYZToLab } from "./XYZToLab";
+import { XYZToLab } from "./XYZ";
 
 /**
  * NOTE: This assumes RGB is scaled from [0, 255], XYZ in [0, 1]

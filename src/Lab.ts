@@ -1,7 +1,7 @@
 import { NumericTriple } from "./Matrix";
 import { DEFAULT_OPTIONS, kE, kK } from "./consts";
 import { Options } from "./types";
-import { XYZToRGB } from "./XYZToRGB";
+import { XYZToRGB } from "./XYZ";
 import { getRefWhiteMtx } from "./getRefWhiteMtx";
 
 export const LabToLCHab = (Lab: NumericTriple): NumericTriple => {
