@@ -70,41 +70,6 @@ export class ColorConverter {
   }
 
   /**
-   * @param LCH NumericTriple
-   */
-  LCHuv_to_XYZ(LCH: NumericTriple): NumericTriple {
-    return this.Luv_to_XYZ(this.LCHuv_to_Luv(LCH));
-  }
-
-  /**
-   * @param LCH NumericTriple
-   */
-  LCHuv_to_xyY(LCH: NumericTriple): NumericTriple {
-    return this.XYZ_to_xyY(this.LCHuv_to_XYZ(LCH));
-  }
-
-  /**
-   * @param LCH NumericTriple
-   */
-  LCHuv_to_Lab(LCH: NumericTriple): NumericTriple {
-    return this.XYZ_to_Lab(this.LCHuv_to_XYZ(LCH));
-  }
-
-  /**
-   * @param LCH NumericTriple
-   */
-  LCHuv_to_LCHab(LCH: NumericTriple): NumericTriple {
-    return this.Lab_to_LCHab(this.LCHuv_to_Lab(LCH));
-  }
-
-  /**
-   * @param LCH NumericTriple
-   */
-  LCHuv_to_RGB(LCH: NumericTriple): NumericTriple {
-    return this.XYZ_to_RGB(this.LCHuv_to_XYZ(LCH));
-  }
-
-  /**
    * @param RGB NumericTriple
    */
   RGB_to_xyY(RGB: NumericTriple): NumericTriple {
