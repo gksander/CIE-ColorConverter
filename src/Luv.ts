@@ -2,6 +2,8 @@ import { NumericTriple } from "./Matrix";
 import { DEFAULT_OPTIONS, kE, kK } from "./consts";
 import { Options } from "./types";
 import { getRefWhiteMtx } from "./getRefWhiteMtx";
+import { XYZToLab, XYZToRGB, XYZToxyY } from "./XYZ";
+import { LabToLCHab } from "./Lab";
 
 export const LuvToLCHuv = (Luv: NumericTriple): NumericTriple => {
   const [L, u, v] = Luv;
@@ -37,4 +39,42 @@ export const LuvToXYZ = (
     Z = X * a + b;
 
   return [X, Y, Z];
+};
+
+export const LuvToxyY = (
+  Luv: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return XYZToxyY(LuvToXYZ(Luv, { refWhite }), { refWhite });
+};
+
+export const LuvToLab = (
+  Luv: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return XYZToLab(LuvToXYZ(Luv, { refWhite }), { refWhite });
+};
+
+export const LuvToLCHab = (
+  Luv: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return LabToLCHab(LuvToLab(Luv, { refWhite }));
+};
+
+export const LuvToRGB = (
+  Luv: NumericTriple,
+  {
+    adaptation = DEFAULT_OPTIONS.ADAPTION,
+    refWhite = DEFAULT_OPTIONS.REF_WHITE,
+    rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
+    gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
+  }: Options = {},
+): NumericTriple => {
+  return XYZToRGB(LuvToXYZ(Luv, { refWhite }), {
+    adaptation,
+    refWhite,
+    rgbModel,
+    gammaModel,
+  });
 };
