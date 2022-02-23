@@ -1,4 +1,4 @@
-import { Matrix, Matrix_3x3 } from "../src/Matrix";
+import { Matrix, Matrix_3x3 } from "./Matrix";
 
 describe("Matrix", () => {
   it("transposes 3x3 matrices", () => {

@@ -1,8 +1,9 @@
 import { NumericTriple } from "./Matrix";
 import { DEFAULT_OPTIONS, kE, kK } from "./consts";
 import { Options } from "./types";
-import { XYZToRGB } from "./XYZ";
+import { XYZToLuv, XYZToRGB, XYZToxyY } from "./XYZ";
 import { getRefWhiteMtx } from "./getRefWhiteMtx";
+import { LuvToLCHuv } from "./Luv";
 
 export const LabToLCHab = (Lab: NumericTriple): NumericTriple => {
   const [L, a, b] = Lab;
@@ -52,4 +53,25 @@ export const LabToXYZ = (
     RefWhite = getRefWhiteMtx(refWhite);
 
   return [x_r * RefWhite[0], y_r * RefWhite[1], z_r * RefWhite[2]];
+};
+
+export const LabToxyY = (
+  Lab: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return XYZToxyY(LabToXYZ(Lab, { refWhite }), { refWhite });
+};
+
+export const LabToLuv = (
+  Lab: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return XYZToLuv(LabToXYZ(Lab, { refWhite }), { refWhite });
+};
+
+export const LabToLCHuv = (
+  Lab: NumericTriple,
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+): NumericTriple => {
+  return LuvToLCHuv(LabToLuv(Lab, { refWhite }));
 };
