@@ -6,7 +6,9 @@ import { getMtxAdaptation } from "./getMtxAdaptation";
 import { getRefWhiteRgbMtx } from "./getRefWhiteRgbMtx";
 import { getRefWhiteMtx } from "./getRefWhiteMtx";
 import { getRgbToXyzMtx } from "./getRgbToXyzMtx";
-import { XYZToLab } from "./XYZ";
+import { XYZToLab, XYZToLuv, XYZToxyY } from "./XYZ";
+import { LabToLCHab } from "./Lab";
+import { LuvToLCHuv } from "./Luv";
 
 /**
  * NOTE: This assumes RGB is scaled from [0, 255], XYZ in [0, 1]
@@ -71,5 +73,63 @@ export const RGBToLab = (
   return XYZToLab(
     RGBToXYZ(RGB, { adaptation, rgbModel, gammaModel, refWhite }),
     { refWhite },
+  );
+};
+
+export const RGBToxyY = (
+  RGB: NumericTriple,
+  {
+    adaptation = DEFAULT_OPTIONS.ADAPTION,
+    rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
+    gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
+    refWhite = DEFAULT_OPTIONS.REF_WHITE,
+  }: Options = {},
+): NumericTriple => {
+  return XYZToxyY(
+    RGBToXYZ(RGB, { adaptation, rgbModel, refWhite, gammaModel }),
+    { refWhite },
+  );
+};
+
+export const RGBToLCHab = (
+  RGB: NumericTriple,
+  {
+    adaptation = DEFAULT_OPTIONS.ADAPTION,
+    rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
+    gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
+    refWhite = DEFAULT_OPTIONS.REF_WHITE,
+  }: Options = {},
+): NumericTriple => {
+  return LabToLCHab(
+    RGBToLab(RGB, { adaptation, rgbModel, refWhite, gammaModel }),
+  );
+};
+
+export const RGBToLuv = (
+  RGB: NumericTriple,
+  {
+    adaptation = DEFAULT_OPTIONS.ADAPTION,
+    rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
+    gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
+    refWhite = DEFAULT_OPTIONS.REF_WHITE,
+  }: Options = {},
+): NumericTriple => {
+  return XYZToLuv(
+    RGBToXYZ(RGB, { adaptation, rgbModel, refWhite, gammaModel }),
+    { refWhite },
+  );
+};
+
+export const RGBToLCHuv = (
+  RGB: NumericTriple,
+  {
+    adaptation = DEFAULT_OPTIONS.ADAPTION,
+    rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
+    gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
+    refWhite = DEFAULT_OPTIONS.REF_WHITE,
+  }: Options = {},
+): NumericTriple => {
+  return LuvToLCHuv(
+    RGBToLuv(RGB, { adaptation, rgbModel, refWhite, gammaModel }),
   );
 };
