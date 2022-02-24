@@ -2,6 +2,10 @@
 
 This project is motivated by [Bruce Lindbloom](http://www.brucelindbloom.com), and consists of a CIE color model converter. E.g., it will allow you to convert between XYZ, xyY, RGB, Luv, etc. color models.
 
+## Version 3 Update
+
+Version 3 of this library moves from a class/instance-based approach to a function-based approach. Now, each conversion method is a standalone function that can be called individually.
+
 ## Usage
 
 Install the package via
