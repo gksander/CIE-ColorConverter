@@ -5,9 +5,6 @@ import { XYZToLab, XYZToLuv, XYZToRGB } from "./XYZ";
 import { LabToLCHab } from "./Lab";
 import { LuvToLCHuv } from "./Luv";
 
-/**
- * Convert xyY triple to XYZ triple
- */
 export const xyYToXYZ = (xyY: NumericTriple): NumericTriple => {
   const [x, y, Y] = xyY;
   if (y < 0.000001) {

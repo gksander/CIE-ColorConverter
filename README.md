@@ -80,62 +80,87 @@ The various options are listed here:
   ```
   `Bradford` is the default.
 
-TODO: example of passing all of these options.
-
-## From RGB to Other Models
-
-### `RGBToXYZ`
+A full example, passing all of these converter options, looks like the following:
 
 ```ts
-import { RGBToXYZ } from 'cie-colorconverter';
+import { RGBToXYZ } from 'cie-colorconveter';
 
-const [X, Y, Z] = RGBToXYZ([50, 100, 150]);
-
-/**
- * CONVERTER OPTIONS:
- *  - adaptation
- *  - refWhite
- *  - rgbModel
- *  - gammaModel
- */
+const [X, Y, Z] = RGBToXYZ([50, 100, 150],{
+  rgbModel: 'sRGB',
+  refWhite: 'D75',
+  gammaModel: '2.2',
+  adaptation: 'von Kries'
+});
 ```
 
-### `RGBToLab`
+## Converter Functions
+
+There are 42 total converter functions available in this library. Each of these functions takes a `NumericTriple` (which is just `[number, number, number]`) as its first argument, and returns a `NumericTriple`. Some of the functions take an optional second argument with converter options.
+
+The available functions, and their types, are shown here:
 
 ```ts
-import { RGBToLab } from 'cie-colorconverter';
+declare type NumericTriple = [number, number, number];
 
-const [L, a, b] = RGBToLab([50, 100, 150]);
+declare type RefWhiteType = "A" | "B" | "C" | "D50" | "D55" | "D65" | "D75" | "E" | "F2" | "F7" | "F11";
+declare type RGBModelType = "Adobe RGB (1998)" | "AppleRGB" | "Best RGB" | "Beta RGB" | "Bruce RGB" | "CIE RGB" | "ColorMatch RGB" | "Don RGB 4" | "ECI RGB v2" | "Ekta Space PS5" | "NTSC RGB" | "PAL/SECAM RGB" | "ProPhoto RGB" | "SMPTE-C RGB" | "sRGB" | "Wide Gamut RGB";
+declare type GammaModelType = "1.0" | "1.8" | "2.2" | "sRGB" | "L*";
+declare type AdaptationType = "Bradford" | "von Kries" | "XYZ Scaling" | "None";
+declare type Options = {
+    refWhite?: RefWhiteType;
+    rgbModel?: RGBModelType;
+    gammaModel?: GammaModelType;
+    adaptation?: AdaptationType;
+};
 
-/**
- * CONVERTER OPTIONS:
- *  - adaptation
- *  - refWhite
- *  - rgbModel
- *  - gammaModel
- */
+declare const LabToLCHab: (Lab: NumericTriple) => NumericTriple;
+declare const LabToRGB: (Lab: NumericTriple, { adaptation, refWhite, rgbModel, gammaModel, }?: Options) => NumericTriple;
+declare const LabToXYZ: (Lab: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LabToxyY: (Lab: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LabToLuv: (Lab: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LabToLCHuv: (Lab: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+
+declare const LCHabToLab: (LCH: NumericTriple) => NumericTriple;
+declare const LCHabToXYZ: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHabToxyY: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHabToLuv: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHabToLCHuv: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHabToRGB: (LCH: NumericTriple, { adaptation, refWhite, rgbModel, gammaModel, }?: Options) => NumericTriple;
+
+declare const LCHuvToLuv: (LCH: NumericTriple) => NumericTriple;
+declare const LCHuvToXYZ: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHuvToxyY: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHuvToLab: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHuvToLCHab: (LCH: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LCHuvToRGB: (LCH: NumericTriple, { adaptation, refWhite, rgbModel, gammaModel, }?: Options) => NumericTriple;
+
+declare const LuvToLCHuv: (Luv: NumericTriple) => NumericTriple;
+declare const LuvToXYZ: (Luv: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LuvToxyY: (Luv: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LuvToLab: (Luv: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LuvToLCHab: (Luv: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const LuvToRGB: (Luv: NumericTriple, { adaptation, refWhite, rgbModel, gammaModel, }?: Options) => NumericTriple;
+
+declare const RGBToXYZ: (RGB: NumericTriple, { adaptation, rgbModel, gammaModel, refWhite, }?: Options) => NumericTriple;
+declare const RGBToLab: (RGB: NumericTriple, { adaptation, rgbModel, gammaModel, refWhite, }?: Options) => NumericTriple;
+declare const RGBToxyY: (RGB: NumericTriple, { adaptation, rgbModel, gammaModel, refWhite, }?: Options) => NumericTriple;
+declare const RGBToLCHab: (RGB: NumericTriple, { adaptation, rgbModel, gammaModel, refWhite, }?: Options) => NumericTriple;
+declare const RGBToLuv: (RGB: NumericTriple, { adaptation, rgbModel, gammaModel, refWhite, }?: Options) => NumericTriple;
+declare const RGBToLCHuv: (RGB: NumericTriple, { adaptation, rgbModel, gammaModel, refWhite, }?: Options) => NumericTriple;
+
+declare const xyYToXYZ: (xyY: NumericTriple) => NumericTriple;
+declare const xyYToLab: (xyY: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const xyYToLCHab: (xyY: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const xyYToLuv: (xyY: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const xyYToLCHuv: (xyY: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const xyYToRGB: (xyY: NumericTriple, { adaptation, refWhite, rgbModel, gammaModel, }?: Options) => NumericTriple;
+
+declare const XYZToLab: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const XYZToLuv: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const XYZToRGB: (XYZ: NumericTriple, { adaptation, refWhite, rgbModel, gammaModel, }?: Options) => NumericTriple;
+declare const XYZToxyY: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const XYZToLCHab: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+declare const XYZToLCHuv: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
+
+export { LCHabToLCHuv, LCHabToLab, LCHabToLuv, LCHabToRGB, LCHabToXYZ, LCHabToxyY, LCHuvToLCHab, LCHuvToLab, LCHuvToLuv, LCHuvToRGB, LCHuvToXYZ, LCHuvToxyY, LabToLCHab, LabToLCHuv, LabToLuv, LabToRGB, LabToXYZ, LabToxyY, LuvToLCHab, LuvToLCHuv, LuvToLab, LuvToRGB, LuvToXYZ, LuvToxyY, RGBToLCHab, RGBToLCHuv, RGBToLab, RGBToLuv, RGBToXYZ, RGBToxyY, XYZToLCHab, XYZToLCHuv, XYZToLab, XYZToLuv, XYZToRGB, XYZToxyY, xyYToLCHab, xyYToLCHuv, xyYToLab, xyYToLuv, xyYToRGB, xyYToXYZ };
 ```
-
-## From XYZ to Other Models
-
-TODO:
-
-## From xyY to Other Models
-
-TODO:
-
-## From Luv to Other Models
-
-TODO:
-
-## From LCHuv to Other Models
-
-TODO:
-
-## From LCHab to Other Models
-
-TODO;
-
-## From Lab to Other Models
-
-TODO:

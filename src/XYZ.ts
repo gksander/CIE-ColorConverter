@@ -9,9 +9,6 @@ import { compand } from "./compand";
 import { LabToLCHab } from "./Lab";
 import { LuvToLCHuv } from "./Luv";
 
-/**
- * Converts Lab triple to XYZ tripe in range [0, 1]
- */
 export const XYZToLab = (
   XYZ: NumericTriple,
   { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
@@ -53,14 +50,6 @@ export const XYZToLuv = (
   return [L, 13 * L * (up - urp), 13 * L * (vp - vrp)];
 };
 
-/**
- * XYZ to RGB
- * @param XYZ
- * @param adaptation
- * @param refWhite
- * @param rgbModel
- * @param gammaModel
- */
 export const XYZToRGB = (
   XYZ: NumericTriple,
   {

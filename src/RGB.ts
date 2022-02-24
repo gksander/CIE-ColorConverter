@@ -10,9 +10,6 @@ import { XYZToLab, XYZToLuv, XYZToxyY } from "./XYZ";
 import { LabToLCHab } from "./Lab";
 import { LuvToLCHuv } from "./Luv";
 
-/**
- * NOTE: This assumes RGB is scaled from [0, 255], XYZ in [0, 1]
- */
 export const RGBToXYZ = (
   RGB: NumericTriple,
   {

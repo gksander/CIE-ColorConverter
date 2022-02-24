@@ -33,10 +33,6 @@ export const LabToRGB = (
   });
 };
 
-/**
- * Convert Lab to XYZ
- * XYZ in range [0, 1]
- */
 export const LabToXYZ = (
   Lab: NumericTriple,
   { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
