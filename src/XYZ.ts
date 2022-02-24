@@ -94,7 +94,9 @@ export const XYZToRGB = (
     Matrix.inv(getRgbToXyzMtx(rgbModel)),
   );
 
-  return RGB.map((v) => 255 * compand(v, gammaModel)) as NumericTriple;
+  return RGB.map(
+    (v) => 255 * compand(v, gammaModel),
+  ) as unknown as NumericTriple;
 };
 
 export const XYZToxyY = (

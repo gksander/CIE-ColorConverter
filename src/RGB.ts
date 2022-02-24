@@ -26,7 +26,9 @@ export const RGBToXYZ = (
   const Mtx_RGB2XYZ = getRgbToXyzMtx(rgbModel);
 
   // Inverse compound the values
-  RGB = RGB.map((v) => inverseCompand(v / 255, gammaModel)) as NumericTriple;
+  RGB = RGB.map((v) =>
+    inverseCompand(v / 255, gammaModel),
+  ) as unknown as NumericTriple;
   // Linear RGB to XYZ
   let XYZ = Matrix.multiply_triple_times_3x3(RGB, Mtx_RGB2XYZ);
 

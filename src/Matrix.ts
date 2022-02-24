@@ -103,5 +103,5 @@ export type Matrix_3x3 = [
   [number, number, number],
 ];
 
-export type NumericTriple = [number, number, number];
-export type FatNumericTriple = [[number], [number], [number]];
+export type NumericTriple = readonly [number, number, number];
+export type FatNumericTriple = readonly [[number], [number], [number]];

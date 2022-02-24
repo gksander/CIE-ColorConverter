@@ -25,6 +25,8 @@ const [X, Y, Z] = RGBToXYZ([50, 100, 150], { refWhite: 'D50' });
 
 This will convert the RGB triple `[50, 100, 150]` to an XYZ triple.
 
+See [Converter Functions section](#converter-functions) for a list of all available functions.
+
 ## Converter Options
 
 There are a few independent variables/parameters when it comes to color model conversions, including:
@@ -34,7 +36,7 @@ There are a few independent variables/parameters when it comes to color model co
 * Gamma value
 * Adaptation model
 
-See, for example, [http://www.brucelindbloom.com/](http://www.brucelindbloom.com/) for more information on these values.
+See, for example, [http://www.brucelindbloom.com](http://www.brucelindbloom.com/) for more information on these values.
 
 The various converter methods will accept the appropriate options as a second argument. For example, when converting from RGB to XYZ, you can set the RGB model:
 
@@ -100,17 +102,17 @@ There are 42 total converter functions available in this library. Each of these 
 The available functions, and their types, are shown here:
 
 ```ts
-declare type NumericTriple = [number, number, number];
+declare type NumericTriple = readonly [number, number, number];
 
 declare type RefWhiteType = "A" | "B" | "C" | "D50" | "D55" | "D65" | "D75" | "E" | "F2" | "F7" | "F11";
 declare type RGBModelType = "Adobe RGB (1998)" | "AppleRGB" | "Best RGB" | "Beta RGB" | "Bruce RGB" | "CIE RGB" | "ColorMatch RGB" | "Don RGB 4" | "ECI RGB v2" | "Ekta Space PS5" | "NTSC RGB" | "PAL/SECAM RGB" | "ProPhoto RGB" | "SMPTE-C RGB" | "sRGB" | "Wide Gamut RGB";
 declare type GammaModelType = "1.0" | "1.8" | "2.2" | "sRGB" | "L*";
 declare type AdaptationType = "Bradford" | "von Kries" | "XYZ Scaling" | "None";
 declare type Options = {
-    refWhite?: RefWhiteType;
-    rgbModel?: RGBModelType;
-    gammaModel?: GammaModelType;
-    adaptation?: AdaptationType;
+  refWhite?: RefWhiteType;
+  rgbModel?: RGBModelType;
+  gammaModel?: GammaModelType;
+  adaptation?: AdaptationType;
 };
 
 declare const LabToLCHab: (Lab: NumericTriple) => NumericTriple;
@@ -161,6 +163,4 @@ declare const XYZToRGB: (XYZ: NumericTriple, { adaptation, refWhite, rgbModel, g
 declare const XYZToxyY: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
 declare const XYZToLCHab: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
 declare const XYZToLCHuv: (XYZ: NumericTriple, { refWhite }?: Pick<Options, "refWhite">) => NumericTriple;
-
-export { LCHabToLCHuv, LCHabToLab, LCHabToLuv, LCHabToRGB, LCHabToXYZ, LCHabToxyY, LCHuvToLCHab, LCHuvToLab, LCHuvToLuv, LCHuvToRGB, LCHuvToXYZ, LCHuvToxyY, LabToLCHab, LabToLCHuv, LabToLuv, LabToRGB, LabToXYZ, LabToxyY, LuvToLCHab, LuvToLCHuv, LuvToLab, LuvToRGB, LuvToXYZ, LuvToxyY, RGBToLCHab, RGBToLCHuv, RGBToLab, RGBToLuv, RGBToXYZ, RGBToxyY, XYZToLCHab, XYZToLCHuv, XYZToLab, XYZToLuv, XYZToRGB, XYZToxyY, xyYToLCHab, xyYToLCHuv, xyYToLab, xyYToLuv, xyYToRGB, xyYToXYZ };
 ```
