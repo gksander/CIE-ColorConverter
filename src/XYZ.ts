@@ -1,6 +1,6 @@
 import { Matrix, NumericTriple } from "./Matrix";
 import { DEFAULT_OPTIONS, kE, kK } from "./consts";
-import { Options } from "./types";
+import { ConverterOptions } from "./types";
 import { getRefWhiteMtx } from "./getRefWhiteMtx";
 import { getMtxAdaptation } from "./getMtxAdaptation";
 import { getRefWhiteRgbMtx } from "./getRefWhiteRgbMtx";
@@ -11,7 +11,7 @@ import { LuvToLCHuv } from "./Luv";
 
 export const XYZToLab = (
   XYZ: NumericTriple,
-  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<ConverterOptions, "refWhite"> = {},
 ): NumericTriple => {
   const X = XYZ[0],
     Y = XYZ[1],
@@ -32,7 +32,7 @@ export const XYZToLab = (
 
 export const XYZToLuv = (
   XYZ: NumericTriple,
-  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<ConverterOptions, "refWhite"> = {},
 ): NumericTriple => {
   const [X, Y, Z] = XYZ,
     RefWhite = getRefWhiteMtx(refWhite),
@@ -57,7 +57,7 @@ export const XYZToRGB = (
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
     rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
-  }: Options = {},
+  }: ConverterOptions = {},
 ): NumericTriple => {
   let XYZd = XYZ;
   const mtxAdp = getMtxAdaptation(adaptation);
@@ -101,7 +101,7 @@ export const XYZToRGB = (
 
 export const XYZToxyY = (
   XYZ: NumericTriple,
-  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<ConverterOptions, "refWhite"> = {},
 ): NumericTriple => {
   const [X, Y, Z] = XYZ,
     Den = X + Y + Z;
@@ -119,14 +119,14 @@ export const XYZToxyY = (
 
 export const XYZToLCHab = (
   XYZ: NumericTriple,
-  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<ConverterOptions, "refWhite"> = {},
 ): NumericTriple => {
   return LabToLCHab(XYZToLab(XYZ, { refWhite }));
 };
 
 export const XYZToLCHuv = (
   XYZ: NumericTriple,
-  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<Options, "refWhite"> = {},
+  { refWhite = DEFAULT_OPTIONS.REF_WHITE }: Pick<ConverterOptions, "refWhite"> = {},
 ): NumericTriple => {
   return LuvToLCHuv(XYZToLuv(XYZ, { refWhite }));
 };

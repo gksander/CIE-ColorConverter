@@ -1,5 +1,5 @@
 import { Matrix, NumericTriple } from "./Matrix";
-import { Options } from "./types";
+import { ConverterOptions } from "./types";
 import { inverseCompand } from "./inverseCompand";
 import { DEFAULT_OPTIONS } from "./consts";
 import { getMtxAdaptation } from "./getMtxAdaptation";
@@ -17,7 +17,7 @@ export const RGBToXYZ = (
     rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
-  }: Options = {},
+  }: ConverterOptions = {},
 ): NumericTriple => {
   // utils
   const MtxAdp = getMtxAdaptation(adaptation);
@@ -67,7 +67,7 @@ export const RGBToLab = (
     rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
-  }: Options = {},
+  }: ConverterOptions = {},
 ): NumericTriple => {
   return XYZToLab(
     RGBToXYZ(RGB, { adaptation, rgbModel, gammaModel, refWhite }),
@@ -82,7 +82,7 @@ export const RGBToxyY = (
     rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
-  }: Options = {},
+  }: ConverterOptions = {},
 ): NumericTriple => {
   return XYZToxyY(
     RGBToXYZ(RGB, { adaptation, rgbModel, refWhite, gammaModel }),
@@ -97,7 +97,7 @@ export const RGBToLCHab = (
     rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
-  }: Options = {},
+  }: ConverterOptions = {},
 ): NumericTriple => {
   return LabToLCHab(
     RGBToLab(RGB, { adaptation, rgbModel, refWhite, gammaModel }),
@@ -111,7 +111,7 @@ export const RGBToLuv = (
     rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
-  }: Options = {},
+  }: ConverterOptions = {},
 ): NumericTriple => {
   return XYZToLuv(
     RGBToXYZ(RGB, { adaptation, rgbModel, refWhite, gammaModel }),
@@ -126,7 +126,7 @@ export const RGBToLCHuv = (
     rgbModel = DEFAULT_OPTIONS.RGB_MODEL,
     gammaModel = DEFAULT_OPTIONS.GAMMA_MODEL,
     refWhite = DEFAULT_OPTIONS.REF_WHITE,
-  }: Options = {},
+  }: ConverterOptions = {},
 ): NumericTriple => {
   return LuvToLCHuv(
     RGBToLuv(RGB, { adaptation, rgbModel, refWhite, gammaModel }),

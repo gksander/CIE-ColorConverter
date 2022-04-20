@@ -37,7 +37,7 @@ export type GammaModelType = "1.0" | "1.8" | "2.2" | "sRGB" | "L*";
 // Adaptation type
 export type AdaptationType = "Bradford" | "von Kries" | "XYZ Scaling" | "None";
 
-export type Options = {
+export type ConverterOptions = {
   refWhite?: RefWhiteType;
   rgbModel?: RGBModelType;
   gammaModel?: GammaModelType;
